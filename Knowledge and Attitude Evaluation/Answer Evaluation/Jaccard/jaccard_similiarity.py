@@ -1,16 +1,16 @@
-#import libraries for Jaccard similarity
-import numpy as np
-import pandas as pd
-import matplotlib.pyplot as plt
-import seaborn as sns
+import imp
 
-def jaccard_similarity(base_answer, sample_answer):
+
+import preprocess_answers
+
+def calculate_jaccard_similarity(base_answer, sample_answer):
     """
     Calculate the Jaccard similarity between two sets of answers
     """
-    #convert the two sets of answers to sets
-    base_answer = set(base_answer)
-    sample_answer = set(sample_answer)
-    #calculate the Jaccard similarity
-    jaccard_similarity = len(base_answer & sample_answer) / len(base_answer | sample_answer)
-    return jaccard_similarity
+    base_answer = set(preprocess_answers.preprocess_answer(base_answer))
+    sample_answer = set(preprocess_answers.preprocess_answer(sample_answer))
+
+    # Calculate the Jaccard similarity
+    similarity = len(base_answer.intersection(sample_answer)) / len(base_answer.union(sample_answer))
+
+    return similarity
