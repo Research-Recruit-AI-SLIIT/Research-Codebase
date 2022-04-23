@@ -1,10 +1,10 @@
 import json
 from csv import DictWriter
   
-question = "what is your name?"
+question = "What is a superclass"
 original_answers = ["my name is yasiru", "I am yasiru"]
 answer = "my name is yasiru"
-score = "good"
+score = ""
 
 data = {'question': question, 'original_answers': original_answers, 'answer': answer, 'score': score}
 
