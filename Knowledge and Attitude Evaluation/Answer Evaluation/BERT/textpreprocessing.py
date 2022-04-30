@@ -16,6 +16,6 @@ def preprocess_answer(answer):
     #lemmatize
     lemmatizer = WordNetLemmatizer()
     answer = [lemmatizer.lemmatize(word) for word in answer]
+    answer = lemmatizer.lemmatize("Running")
 
     return answer
-
