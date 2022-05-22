@@ -1,4 +1,4 @@
-from abc import abstractclassmethod, abstractmethod
+from abc import abstractmethod
 from keras.models import load_model
 import tensorflow as tf
 import keras 
@@ -15,7 +15,7 @@ class MindSetEvaluation:
         self.label_encoder.fit(np.load(encorder_classes))
         self.model = keras.models.load_model(self.model_path)
     
-    # abstract method predict
+    # abstract method preprocess_data
     @abstractmethod
     def preprocess_data(self, text):
         """
