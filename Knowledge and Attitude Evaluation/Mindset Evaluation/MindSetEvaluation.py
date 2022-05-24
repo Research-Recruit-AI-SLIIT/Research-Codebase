@@ -14,6 +14,23 @@ class MindSetEvaluation:
         self.label_encoder = LabelBinarizer()
         self.label_encoder.fit(np.load(encorder_classes))
         self.model = keras.models.load_model(self.model_path)
+
+    
+    @abstractmethod
+    def remove_repetitions(self, text):
+        """
+        Removes repetitions
+
+        """
+        sentences = text.split(".")
+        previous_word = ""
+
+        for word in sentences:
+            if word == previous_word:
+                sentences.remove(word)
+            previous_word = word
+
+        return ".".join(sentences)
     
     # abstract method preprocess_data
     @abstractmethod
@@ -33,6 +50,7 @@ class MindSetEvaluation:
         text = [t.lower() for t in text]
         text = [t.translate(str.maketrans('', '', '!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~')) for t in text]
         text = [t.translate(str.maketrans('', '', '0123456789')) for t in text]
+        text = self.remove_repetitions(text)
 
         return text
     
