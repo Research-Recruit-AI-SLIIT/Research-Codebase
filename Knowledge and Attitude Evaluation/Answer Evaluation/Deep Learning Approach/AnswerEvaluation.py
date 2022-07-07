@@ -84,12 +84,11 @@ class AnswerEvaluation:
             if prediction == 2:
                 break
         
-
         result = results.index(max(results))
 
-        if result == 0:
+        if results[result] == 0:
             result =  "Not Acceptable"
-        elif result == 1:
+        elif results[result] == 1:
             result = "Need Improvement"
         else:
             result = "Good"

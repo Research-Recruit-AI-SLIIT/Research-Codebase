@@ -9,7 +9,7 @@ from sklearn.preprocessing import LabelBinarizer
 import numpy as np
 
 class MindSetEvaluation:
-    def __init__(self, model_path = ".\Models\model1", encorder_classes = ".\Models\encoder.npy"):
+    def __init__(self, model_path = ".\Models\model2", encorder_classes = ".\Models\encoder.npy"):
         self.model_path = model_path
         self.label_encoder = LabelBinarizer()
         self.label_encoder.fit(np.load(encorder_classes))
@@ -50,7 +50,7 @@ class MindSetEvaluation:
         text = [t.lower() for t in text]
         text = [t.translate(str.maketrans('', '', '!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~')) for t in text]
         text = [t.translate(str.maketrans('', '', '0123456789')) for t in text]
-        text = self.remove_repetitions(text)
+        #text = self.remove_repetitions(text)
 
         return text
     
@@ -72,5 +72,4 @@ class MindSetEvaluation:
         predictions = self.model.predict(text)
         predictions = self.label_encoder.inverse_transform(predictions)
         return predictions
-
     
