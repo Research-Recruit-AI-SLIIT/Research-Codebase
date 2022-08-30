@@ -7,3 +7,4 @@ def keyPhraseExtraction_yake(text):
     keywords = kw_extractor.extract_keywords(text)
     for kw, v in keywords:
         print("Keyphrase: ", kw, ": score", v)
+        
