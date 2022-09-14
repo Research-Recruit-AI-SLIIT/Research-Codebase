@@ -4,3 +4,6 @@
 /Knowledge and Attitude Evaluation/Mindset Evaluation/Data
 /Knowledge and Attitude Evaluation/Mindset Evaluation/logs
 /Knowledge and Attitude Evaluation/Mindset Evaluation/Models
+/Knowledge and Attitude Evaluation/Answer Evaluation/App/flask
+/Knowledge and Attitude Evaluation/Answer Evaluation/App/__pycache__
+/Knowledge and Attitude Evaluation/Answer Evaluation/App/*.h5
