@@ -55,7 +55,8 @@ def predict():
     # you may download one from here : https://www.pexels.com/video/three-girls-laughing-5273028/
     #cap = cv2.VideoCapture("C:\\Users\\Okanda Liyanage\\Desktop\\emotion\\Emotion_detection_with_CNN-main\\video.mp4")
     cap = cv2.VideoCapture("video.mp4")
-
+    total=0
+    happy_neutral =0
     while True:
 
         # Find haar cascade to draw bounding box around face
@@ -104,14 +105,25 @@ def predict():
             #count = list1.count( "Angry")
         #   print(list1.count("Neutral"))
             #print(len(list1))
-        #cv2.imshow('Emotion Detection', frame)
-        if cv2.waitKey(1) & 0xFF == ord('q'):
-            break
-        for key,value in emotion_dict.items():
-                print(value,':',Emotion_count[key])
-                emotion_count_dict[value] = Emotion_count[key]
-         
-    return emotion_count_dict
+        
+    for key,value in emotion_dict.items():
+        print(value,':',Emotion_count[key])
+        emotion_count_dict[value] = Emotion_count[key]
+    
+    for key,value in emotion_dict.items():
+        total+=Emotion_count[key]
+        if key=="Happy" or "Neutral":
+            happy_neutral+=Emotion_count[key]
+    status=""
+    if float(happy_neutral/total)>0.75:
+        status ="High"
+    elif float(happy_neutral/total)>0.6:
+        status ="Medium"
+    else:
+        status="Low"
+
+    print(status)            
+    return status
 
 
     cap.release()
