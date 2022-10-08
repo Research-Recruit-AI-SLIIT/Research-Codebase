@@ -1,0 +1,56 @@
+.question-wrapper {
+	background-color: aliceblue;
+	position: relative;
+	margin-bottom: 10px;
+	border-radius: 10px;
+	background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='10' ry='10' stroke='%23BFBFBFFF' stroke-width='6' stroke-dasharray='6%2c 14' stroke-dashoffset='28' stroke-linecap='square'/%3e%3c/svg%3e");
+	border-radius: 10px;
+	padding: 20px;
+}
+
+.q-view {
+	background-color: #c8ffe25c;
+}
+
+.question-icon {
+	position: absolute;
+	top: -12px;
+	right: -10px;
+	color: #b1b1b1;
+	width: 2rem;
+	height: 2rem;
+	padding: 4px;
+	cursor: pointer !important;
+	transition: all 0.3s ease-in-out;
+	z-index: 10000;
+}
+
+.question-icon:hover {
+	color: #000;
+}
+
+.icon-close {
+	color: rgb(255, 0, 0);
+}
+.question-title {
+	font-size: 1.2rem;
+	font-weight: bold;
+	color: #000;
+}
+
+.empty-sample-answer {
+	color: rgb(255, 0, 0);
+	font-size: 1rem;
+	font-weight: 500;
+	text-decoration: underline !important;
+	margin-bottom: 10px;
+}
+
+.gap-1 {
+	gap: 5px;
+}
+
+.border-1 {
+	border: 1px solid #00112f;
+	border-radius: 5px;
+}

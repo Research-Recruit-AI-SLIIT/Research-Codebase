@@ -1,0 +1,57 @@
+.app {
+	height: 100vh;
+	overflow-y: scroll;
+}
+.page-title {
+	font-size: 2.2rem;
+	font-weight: bold;
+	color: #000;
+	text-align: center;
+	margin-bottom: 1rem;
+	position: relative;
+}
+
+.page-title::after {
+	content: '';
+	position: absolute;
+	height: 3px;
+	background: rgb(0, 0, 0);
+	top: 102%;
+	width: 50%;
+	left: 50%;
+	transform: translateX(-50%);
+	border-radius: 4px;
+}
+
+.loading-spinner-wrapper {
+	display: flex;
+	justify-content: center;
+	padding: 10px;
+	width: 100%;
+	font-size: 1rem;
+	font-weight: 400;
+	line-height: 1.5;
+	color: #495057;
+	background-color: #fff;
+	background-clip: padding-box;
+	border: 1px solid #ced4da;
+	border-radius: 0.25rem;
+	transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.faded-title {
+	opacity: 0.6;
+}
+
+.cursor-pointer {
+	cursor: pointer;
+}
+
+.p-13-px {
+	padding: 13px;
+}
+
+.td-none {
+	text-decoration: none !important;
+	color: #000;
+}

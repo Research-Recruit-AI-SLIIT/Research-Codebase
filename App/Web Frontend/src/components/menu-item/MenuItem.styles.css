@@ -1,0 +1,21 @@
+.menu-item {
+	border-radius: 10px;
+	height: 200px;
+	background-size: cover;
+	box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+	border: 1px solid #000;
+}
+
+.menu-item:hover {
+	opacity: 0.8;
+	background: white !important;
+}
+
+.mi-card {
+	background-color: transparent;
+	border: none;
+}
+
+.card-title {
+	font-weight: 700;
+}
