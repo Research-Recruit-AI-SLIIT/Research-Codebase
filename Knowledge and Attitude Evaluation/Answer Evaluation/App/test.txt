@@ -1,0 +1,24 @@
+#https://docs.microsoft.com/en-us/azure/container-instances/container-instances-gpu
+# FROM nvidia/cuda:11.4.2-base-ubuntu20.04
+# RUN apt-get update && \
+#     apt-get install -y build-essential \
+#                         apt-utils \
+#                         python-dev \
+#                         python3.8 \
+#                         python3-pip \
+#                         python-opengl \
+#                         ffmpeg \
+#                         graphviz \
+#                         cmake \
+#                         swig3.0 && \
+#                         ln -s /usr/bin/swig3.0 /usr/bin/swig
+
+# RUN apt-get upgrade -y
+
+# RUN pip install --upgrade pip
+
+# WORKDIR /app
+# COPY . /app
+# RUN pip install -r requirements.txt
+# EXPOSE 5000
+# CMD ["python", "app.py"]
