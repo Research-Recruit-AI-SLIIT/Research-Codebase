@@ -1,0 +1,11 @@
+.interview-card-row-label {
+	font-size: 0.8rem;
+	font-weight: 400;
+	color: #000000;
+}
+
+.interview-card-row-value {
+	font-size: 1rem;
+	font-weight: 600;
+	color: #000000;
+}

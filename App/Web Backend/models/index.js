@@ -1,0 +1,10 @@
+module.exports.Admin = require('./admin.model');
+module.exports.Candidate = require('./candidate.model');
+module.exports.User = require('./user.model');
+module.exports.Token = require('./token.model');
+module.exports.Organization = require('./organization.model');
+module.exports.Interview = require('./interview.model');
+module.exports.InterviewCategory = require('./interview-category.model');
+module.exports.InterviewSession = require('./interview-session.model');
+module.exports.InterviewQuestion = require('./interview-question.model');
+module.exports.InterviewAnswer = require('./interview-answer.model');
