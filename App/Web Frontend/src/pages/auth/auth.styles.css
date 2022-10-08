@@ -1,0 +1,32 @@
+.auth-container {
+	background-size: cover;
+	min-width: 100%;
+}
+.auth-row {
+	min-height: 100vh;
+
+	backdrop-filter: blur(10rem);
+}
+.auth-btn-color {
+	background-color: #0e1c36;
+	color: #fff;
+}
+
+.auth-btn-color:hover {
+	background-color: #ffffff;
+	color: rgb(0, 0, 0);
+}
+
+.profile-image-pic {
+	height: 200px;
+	width: 200px;
+	object-fit: cover;
+}
+
+.cardbody-color {
+	background-color: #ebf2fa;
+}
+
+a {
+	text-decoration: none;
+}

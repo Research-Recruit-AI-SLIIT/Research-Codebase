@@ -1,0 +1,41 @@
+.finished-interview-container {
+	padding: 20px;
+	color: white;
+	height: 600px;
+	/* background-image: url('https://source.unsplash.com/random/40x40/?illustration'); */
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-weight: 800;
+	font-size: 42px;
+}
+
+.finished-interview-container,
+.overlay:before {
+	background: url(https://unsplash.it/1920/1080/?success) no-repeat fixed 0 0 /
+		cover;
+}
+
+.overlay {
+	max-height: 200px;
+	margin: 0 auto;
+	max-width: 768px;
+	overflow: hidden;
+	padding: 50px;
+	position: relative;
+	color: rgb(0, 0, 0);
+	font-family: 'Lato';
+	position: relative;
+	text-align: center;
+	z-index: 0;
+}
+.overlay:before {
+	content: '';
+	filter: blur(20px);
+	height: 100%;
+	left: 0;
+	position: absolute;
+	top: 0;
+	width: 100%;
+	z-index: -1;
+}
