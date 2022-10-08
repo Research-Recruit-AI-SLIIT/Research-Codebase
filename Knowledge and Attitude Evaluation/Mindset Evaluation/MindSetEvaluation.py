@@ -9,7 +9,7 @@ from sklearn.preprocessing import LabelBinarizer
 import numpy as np
 
 class MindSetEvaluation:
-    def __init__(self, model_path = ".\Models\model1", encorder_classes = ".\Models\encoder.npy"):
+    def __init__(self, model_path = ".\Models\20221006-083342", encorder_classes = ".\Models\encoder.npy"):
         self.model_path = model_path
         self.label_encoder = LabelBinarizer()
         self.label_encoder.fit(np.load(encorder_classes))
