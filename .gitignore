@@ -8,4 +8,7 @@
 /Knowledge and Attitude Evaluation/Answer Evaluation/App/__pycache__
 /Knowledge and Attitude Evaluation/Answer Evaluation/App/*.h5
 /Knowledge and Attitude Evaluation/Answer Evaluation/App/flask
-/App/PythonAPI/pythonapi
+/App/PythonAPI/PythonAPI
+/App/PythonAPI/PythonAPI/__pycache__
+/App/PythonAPI/PythonAPI/*.h5
+/App/PythonAPI/PythonAPI/flask
