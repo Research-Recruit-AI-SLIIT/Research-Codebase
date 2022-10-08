@@ -8,7 +8,6 @@ import pandas as pd
 import numpy as np
 from sklearn.metrics import pairwise
 
-
 class AnswerEvaluation:
     def __init__(self, model_path="./model.h5"):
         print("Loading Model")

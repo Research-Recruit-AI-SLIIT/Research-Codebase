@@ -7,7 +7,7 @@ from AnswerEvaluation import AnswerEvaluation
 app = Flask(__name__)
 CORS(app)
 
-@app.route('/predict', methods=['POST'])
+@app.route('/predict', methods=['GET'])
 def predict():
     data = request.get_json(force=True)
     model = AnswerEvaluation()
