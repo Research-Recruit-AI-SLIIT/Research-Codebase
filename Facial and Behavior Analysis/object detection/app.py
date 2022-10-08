@@ -67,16 +67,14 @@ def predict():
             for i in indexes.flatten():
                 x, y, w, h = boxes[i]
                 label = str(classes[class_ids[i]])
-                detected_labels.add(label)
+                if label  in ("remote","cell phone","book"):
+                    detected_labels.add(label)
                 confidence = str(round(confidences[i],2))
                 color = colors[i]
                 cv2.rectangle(img, (x,y), (x+w, y+h), color, 2)
                 cv2.putText(img, label + " " + confidence, (x, y+20), font, 2, (255,255,255), 2)
 
-        cv2.imshow('Image', img)
-        key = cv2.waitKey(1)
-        if key==27:
-            break
+       
     
     cap.release()
     cv2.destroyAllWindows()
