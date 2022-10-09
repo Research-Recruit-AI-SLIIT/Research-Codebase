@@ -5,89 +5,93 @@ from pydub.silence import split_on_silence
 import re
 import requests
 
+
 def fillerwords(transcript):
-        ScoreforFillerwords = 60/100
+    print("-------------------------------------------------------------------")
+    ScoreforFillerwords = 60 / 100
 
-        like=0
-        okay =0
-        so = 0
-        actually= 0
-        basically =0
-        right = 0
+    like = 0
+    okay = 0
+    so = 0
+    actually = 0
+    basically = 0
+    right = 0
 
-        listwords=["like","okay" ,"So", "actually" ,"basically","right"]
+    listwords = ["like", "okay", "So", "actually", "basically", "right"]
 
-        numofwords =len(transcript.split())
+    numofwords = len(transcript.split())
+    print("\nStart time: {} \t filename: {}".format(datetime.now(), transcript))
 
+    try:
+        print("\nstart read the file: {} \t filename: {}".format(datetime.now(), transcript))
+        read = transcript.split("\n")
 
-        try:
-            read = transcript.split("\n")
+        for word in listwords:
+            lower = word.lower()
 
-            for word in listwords:
-                lower = word.lower()
+            count = 0
+            print("\nStart the preprocessing: {} \t filename: {}".format(datetime.now(), transcript))
+            for sentance in read:
+                line = sentance.split()
+                for each in line:
+                    line2 = each.lower()
+                    line2 = line2.strip("!@#$%^&*(()_+=")
 
-                count = 0
+                    if lower == line2:
+                        count += 1
 
-                for sentance in read:
-                    line = sentance.split()
-                    for each in line:
-                        line2 = each.lower()
-                        line2 = line2.strip("!@#$%^&*(()_+=")
+                        if lower == 'like':
+                            like = like + 1
+                        elif lower == 'okay':
+                            okay = okay + 1
+                        elif lower == 'so':
+                            so = so + 1
+                        elif lower == 'actually':
+                            actually = actually + 1
+                        elif lower == 'basically':
+                            basically = basically + 1
+                        else:
+                            right = right + 1
 
-                        if lower == line2:
-                            count += 1
-
-
-                            if lower == 'like':
-                                like = like +1
-                            elif lower =='okay':
-                                okay = okay +1
-                            elif lower =='so':
-                                so= so +1
-                            elif lower == 'actually':
-                                actually = actually +1
-                            elif lower == 'basically':
-                                basically = basically+1
-                            else:
-                                right = right+1
-
-
-
-
-
-
-
-                returnvalue = (lower, ":", count)
+            returnvalue = (lower, ":", count)
 
 
 
-        except FileExistsError:
-                print("Have not filler word")
-                return "Have not filler word"
+    except FileExistsError:
+        print("Have not filler word")
+        return "Have not filler word"
 
-        # calculating summation of filler words
+    # calculating summation of filler words
 
-        summation = int(like+okay+so+actually+basically+right)
-        percentage=(summation/numofwords) *100
-        #print(numofwords)
+    summation = int(like + okay + so + actually + basically + right)
+    percentage = (summation / numofwords) * 100
+    # print(numofwords)
 
-        #return {"like":like,"okay":okay,"so":so,"actually":actually,"basically":basically,"right":right,"percentage of filler words count is": percentage}
-        return {
-                "percentage of filler words count is": percentage}
+    # return {"like":like,"okay":okay,"so":so,"actually":actually,"basically":basically,"right":right,"percentage of filler words count is": percentage}
+    print("\nProcess End Time", datetime.now.strftime("%H:%M:%S") + "\t filename {}".format(transcript))
+    print("\n--------------------------------------------------------------------------")
+    return {
+        "percentage of filler words count is": percentage}
+
 
 def countPauses(audio_sas_url):
+    print("-------------------------------------------------------------------")
     r = requests.get(audio_sas_url, allow_redirects=True)
     filePath = re.search('(?<=audio/).*(?=\?)', audio_sas_url).group(0)
-    open(filePath, 'wb').write(r.content)   
+    print("\ndownload the Audio from Database \t filename {}".format(filePath))
+    open(filePath, 'wb').write(r.content)
+    print("\nStart time: {} \t filename: {}".format(datetime.now(), filePath))
 
     ScoreforUserSilence = 70 / 100
     sound = AudioSegment.from_wav(filePath)
+    print("\nSplit the audio into chunks: {} \t filename: {}".format(datetime.now(), filePath))
     chunks = split_on_silence(sound, min_silence_len=200, silence_thresh=sound.dBFS - 16, keep_silence=150)
 
     # Chunk Folder file Path
     chunk_folder_name = "chunks"
 
     # create folder to store chunks
+    print("\nStore the chunks: {} \t filename: {}".format(datetime.now(), filePath))
     if not os.path.isdir(chunk_folder_name):
         os.mkdir(chunk_folder_name)
 
@@ -100,14 +104,15 @@ def countPauses(audio_sas_url):
     # print count of silence
     print(str(len(chunks) - 1) + " : Silence/s found")
 
-    
     try:
         if os.path.exists(filePath):
+            print("\nRemove the file from the Database\t filename {}".format(filePath))
             os.remove(filePath)
-    except OSError: 
+    except OSError:
         pass
-
+    print("\nProcess End Time", datetime.now.strftime("%H:%M:%S") + "\t filename {}".format(filePath))
+    print("\n--------------------------------------------------------------------------")
     return {
         "message": str(len(chunks) - 1) + " : Silence/s found",
-        "score": ScoreforUserSilence
+        #"score": ScoreforUserSilence
     }
