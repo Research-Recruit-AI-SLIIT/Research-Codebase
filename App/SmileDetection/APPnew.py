@@ -8,7 +8,7 @@ import imutils
 import argparse
 import cv2
 
-from flask import Flask, request, jsonify 
+from flask import Flask, request, jsonify
 import flask
 from flask_cors import CORS, cross_origin
 from collections import Counter
@@ -16,7 +16,6 @@ import re
 import requests
 import os
 import jsonpickle
-
 
 app = flask.Flask(__name__)
 cors = CORS(app)
@@ -26,37 +25,28 @@ app.config["DEBUG"] = True
 
 @app.route('/smile', methods=['GET'])
 def smiledetection():
+    print("-------------------------------------------------------------------")
     data = request.get_json(force=True)
     video_sas_url = data['video_sas_url']
     r = requests.get(video_sas_url, allow_redirects=True)
     filename = re.search('(?<=research/).*(?=\?)', video_sas_url).group(0).split("/")[1]
+    print("\ndownload the Video from Database \t filename {}".format(filename))
     open(filename, 'wb').write(r.content)
-    # construct the argument parse and parse the arguments
-    #ap = argparse.ArgumentParser()
-    # ap.add_argument('-c', '--cascade',required=True,
-    # help='path to where the face cascade resides')
-    # ap.add_argument('-m', '--model', required=True,
-    # help='path to the pre-trained smile detector CNN')
-    # ap.add_argument('-v', '--video',
-    # help='path to the (optional) video file')
-    #args = vars(ap.parse_args())
+    print("\nStart time: {} \t filename: {}".format(datetime.now(), filename))
 
     # Variables
     COUNTER_smile = 0
     COUNTER_notsmile = 0
 
     # load the face detector cascade and smile detector CNN
+
+    print("\nload the face detector cascade and smile detector CNN \t filename {}".format(filename))
     detector = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
 
+    print("\nload the Model \t filename {}".format(filename))
     model = load_model('model.h5')
 
-    # if a video path was not supplied, grab the refrences to the webcam
-    # if not args.get('video', False):
-    #print('[INFO] starting video capture...')
-    #camera = cv2.VideoCapture(0)
 
-    # otherwise, load the video
-    # else:
 
     camera = cv2.VideoCapture(filename)
 
@@ -73,11 +63,13 @@ def smiledetection():
 
         # resize the fram, convert it to grayscale, and then clone the
         # orgignal frame so we draw on it later in the program
+        print("\nresize the fram, convert it to grayscale, and then clone the orginal frame \t filename {}".format(filename))
         frame = imutils.resize(frame, width=700)
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         frameClone = frame.copy()
 
         # detect faces in the input frame, then clone the frame so that we can draw onit
+        print("\ndetect faces in the input frame, then clone the frame so that we can draw onit \t filename {}".format(filename))
         rects = detector.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=5, minSize=(
             30, 30), flags=cv2.CASCADE_SCALE_IMAGE)
 
@@ -85,6 +77,10 @@ def smiledetection():
             # extract the ROI of the face from the grayscale image
             # resize it to a fixed 28x28 pixels, and then prepare the
             # ROI for classification via the CNN
+            print("\nextract the ROI of the face from the grayscale image \t filename {}".format(filename))
+            print("\nresize it to a fixed 28x28 pixels, and then prepare the \t filename {}".format(filename))
+
+
             roi = gray[fY:fY + fH, fX:fX + fW]
             roi = cv2.resize(roi, (28, 28))
             roi = roi.astype('float') / 255.0
@@ -93,6 +89,7 @@ def smiledetection():
 
             # determine the probaboilities of both 'smiling' and 'not smiling',
             # then set the label accordingly
+            print("\ndetermine the probaboilities of both 'smiling' and 'not smiling and set the label accordingly \t filename {}".format(filename))
             (notSmiling, Smiling) = model.predict(roi)[0]
             label = 'Smiling' if Smiling > notSmiling else "Not Smiling"
 
@@ -110,29 +107,36 @@ def smiledetection():
                               (fX + fW, fY + fH), (0, 0, 255), 2)
                 COUNTER_notsmile = COUNTER_notsmile + 1
 
-        # show our detected face along with smiling/not smiling labels
-        #cv2.imshow('Face', frameClone)
 
-        # if 'q' key is pressed, stop the loop
-        if cv2.waitKey(1) & 0xFF == ord('q'):
-
-            break
 
     # cleanup the camera and close any open windows
     camera.release()
     cv2.destroyAllWindows()
-    
+
     try:
         if os.path.exists(filename):
+            print("\nRemove the file from the Database\t filename {}".format(filename))
             os.remove(filename)
     except:
         pass
-    
-    return {
-        "Smile counts":
-        COUNTER_smile,
-        "Not_Smile counts": COUNTER_notsmile
-    }
+
+        # total frame count
+        total = COUNTER_smile+ COUNTER_notsmile
+        # if Smile frames has 75% or larger then status is good
+        if COUNTER_smile / total >= 0.75:
+            status = 'High'
+        elif COUNTER_smile / total >= 0.6:
+            status = 'Medium'
+        else:
+            status = 'Low'
+
+        print("\nGenuine Smile is : ", status)
+
+        # print process end time
+        print("\nProcess End Time", datetime.now.strftime("%H:%M:%S") + "\t filename {}".format(filename))
+        print("\n--------------------------------------------------------------------------")
+
+        return {"status": status}
 
 
 app.run(port=5006)
