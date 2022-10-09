@@ -33,6 +33,9 @@ def predict():
         "touching face" : 0,
       
     }
+     print ('-'*50) 
+    #print("\nStart time: {} \t filename: {}".format(datetime.now(), filename))
+    print ('-'*50)
 
     # load json and create model
     json_file = open('./model.json ', 'r')
@@ -42,7 +45,9 @@ def predict():
 
     # load weights into new model
     emotion_model.load_weights("./behavior_model.h5")
+    print ('-'*50) 
     print("Loaded model from disk")
+    print ('-'*50) 
 
     # start the webcam feed
     #cap = cv2.VideoCapture(0)
@@ -50,6 +55,8 @@ def predict():
     # pass here your video path
     # you may download one from here : https://www.pexels.com/video/three-girls-laughing-5273028/
     cap = cv2.VideoCapture(filename)
+    total=0
+    normal =0
 
     while True:
 
@@ -79,10 +86,30 @@ def predict():
             prediction=behavior_prediction
             list1=list(behavior_dict[maxindex])
         
-        for key,value in behavior_dict.items():
-                print(value,':',behavior_count[key])
-                behavior_count_dict[value] = behavior_count[key]
-    cap.release()
+    for key,value in behavior_dict.items():
+        print(value,':',behavior_count[key])
+        behavior_count_dict[value] = behavior_count[key]
+   
+    for key,value in behavior_dict.items():
+        total+=behavior_count[key]
+        if key=="normal":
+            normal+=behavior_count[key]
+    status=""
+
+    if float(normal/total)>0.80:
+        status ="High"
+
+    elif float(normal/total)>0.60:
+        status ="Medium"
+    else:
+        status="Low"
+
+    print ('-'*50) 
+   # print("\nEnd time: {} \t filename: {}".format(datetime.now(), filename))
+    print ('-'*50) 
+    print(status)            
+    return status
+    #return behavior_count_dict
 
 
     return behavior_count_dict
