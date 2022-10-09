@@ -19,6 +19,10 @@ app.config["DEBUG"] = True
 
 @app.route('/Object', methods=['GET'])
 def predict():
+    print ('-'*50) 
+    #print("\nStart time: {} \t filename: {}".format(datetime.now(), filename))
+    print ('-'*50)
+
     data = request.get_json(force=True)
     video_sas_url = data['video_sas_url']
     r = requests.get(video_sas_url, allow_redirects=True)
@@ -26,6 +30,9 @@ def predict():
     open(filename, 'wb').write(r.content)
 
     net = cv2.dnn.readNet('yolov3-tiny.weights', 'yolov3-tiny.cfg')
+    print ('-'*50)
+    print("Loaded model from disk")
+    print ('-'*50)
 
     classes = []
     with open("coco.names", "r") as f:
@@ -75,7 +82,8 @@ def predict():
             for i in indexes.flatten():
                 x, y, w, h = boxes[i]
                 label = str(classes[class_ids[i]])
-                detected_labels.add(label)
+                 if label  in ("remote","cell phone","book","laptop"):
+                    detected_labels.add(label)
                 confidence = str(round(confidences[i],2))
                 color = colors[i]
                 cv2.rectangle(img, (x,y), (x+w, y+h), color, 2)
@@ -90,6 +98,9 @@ def predict():
     except:
         pass
 
+    print ('-'*50)
+    #print("\nEnd time: {} \t filename: {}".format(datetime.now(), filename))
+    print ('-'*50)
     print(detected_labels)
     return list(detected_labels)
 
