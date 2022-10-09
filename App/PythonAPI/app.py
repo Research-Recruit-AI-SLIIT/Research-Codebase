@@ -15,7 +15,6 @@ from bson.objectid import ObjectId
 import requests
 import json
 from threading import Thread
-from LanguageFluency import fillerwords, countPauses
 
 app = Flask(__name__)
 CORS(app)
@@ -26,7 +25,7 @@ BLOB_ACCOUNT_NAME = os.getenv("BLOB_ACCOUNT_NAME")
 BLOB_ACCOUNT_KEY = os.getenv("BLOB_ACCOUNT_KEY")
 AZURE_SPEECH_KEY = os.getenv("AZURE_SPEECH_KEY")
 DB_CONNECTION_STRING = os.getenv('DB_CONNECTION_STRING')
-FILLER_WORDS_ENDPOINT = os.getenv("FILLER_WORDS_ENDPOINT")
+FILLER_PAUSES_ENDPOINT = os.getenv("FILLER_PAUSES_ENDPOINT")
 BEHAVIOUR_ANALYTICS_URL = os.getenv("BEHAVIOUR_ANALYTICS_URL")
 EYE_CONTACT_ANALYTICS_URL = os.getenv("EYE_CONTACT_ANALYTICS_URL")
 PERSONALITY_TRAITS_ENDPOINT = os.getenv("PERSONALITY_TRAITS_ENDPOINT")
@@ -34,6 +33,8 @@ SMILE_DETECTION_ENDPOINT = os.getenv("SMILE_DETECTION_ENDPOINT")
 ANSWER_EVALUATION_ENDPOINT = os.getenv("ANSWER_EVALUATION_ENDPOINT")
 MINDSET_EVALUATION_ENDPOINT = os.getenv("MINDSET_EVALUATION_ENDPOINT")
 UNAUTHORIZED_OBJECT_DETECTION_ENDPOINT = os.getenv("UNAUTHORIZED_OBJECT_DETECTION_ENDPOINT")
+LANGUAGE_FLUENCY_ENDPOINT = os.getenv("LANGUAGE_FLUENCY_ENDPOINT")
+EMOTION_ANALYSIS_URL = os.getenv("EMOTION_ANALYSIS_URL")
 
 blob_service_client = BlobServiceClient.from_connection_string(
     BLOB_CONNECTION_STRING)
@@ -141,8 +142,81 @@ def convert_audio_to_text(file_name):
 
     return paragraph
 
-def executeProcess(interviewAnswersId):
+def confidenceEvaluate(eyecontact, smile, emotion, behavior):
+    #if any value is equal 'high' then the score is 3
+    #if any value is equal 'average' then the score is 2
+    #if any value is equal 'low' then the score is 1
 
+    eyecontact = str(eyecontact).lower()
+    smile = str(smile).lower()
+    emotion = str(emotion).lower()
+    behavior = str(behavior).lower()
+
+    eyecontactScore = eyecontact == 'high' and 3 or eyecontact == 'average' and 2 or eyecontact == 'low' and 1
+    smileScore = smile == 'high' and 3 or smile == 'average' and 2 or smile == 'low' and 1
+    emotionScore = emotion == 'high' and 3 or emotion == 'average' and 2 or emotion == 'low' and 1
+    behaviorScore = behavior == 'high' and 3 or behavior == 'average' and 2 or behavior == 'low' and 1
+
+    #calculate the total score
+    totalScore = eyecontactScore + smileScore + emotionScore + behaviorScore
+
+    #if total score is greater than 8 then the confidence is 'high'
+    #if total score is greater than 4 then the confidence is 'average'
+    #if total score is less than 4 then the confidence is 'low'
+    confidence = totalScore > 8 and 'high' or totalScore > 4 and 'average' or 'low'
+
+    return confidence
+
+def overallEvaluation(records):
+    numRecords = len(records)
+
+    confidenceScore = 0
+    knowledgeScore = 0
+    mindsetScore = 0
+    fillerPausesCount = 0
+    fillerWordsPercentage = 0
+    silencePauseCount = 0
+    unAuthorizedObjects = []
+    personlity = []
+
+    for record in records:
+        record = record["result"]
+        confidenceScore += record['confidence'] == 'high' and 3 or record['confidence'] == 'average' and 2 or record['confidence'] == 'low' and 1
+        knowledgeScore += record['knowledge'] == 'Acceptable' and 3 or record['knowledge'] == 'Need Improvements' and 2 or record['knowledge'] == 'Not Acceptable' and 1
+        mindsetScore += record['mindset'] == 'positive' and 1 or record['mindset'] == 'negative' and 0
+        fillerPausesCount += record['fillerPausesCount']
+        fillerWordsPercentage += record['fillerWordsPercentage']
+        silencePauseCount += record['silencePausesCount']
+        unAuthorizedObjects += record['unAuthorizedObjects']
+        personlity.append(record['personality'])
+
+    avgConfidenceScore = confidenceScore / numRecords
+    avgKnowledgeScore = knowledgeScore / numRecords
+    avgMindsetScore = mindsetScore / numRecords
+    avgFillerPausesCount = fillerPausesCount / numRecords
+    avgFillerWordsPercentage = fillerWordsPercentage / numRecords
+    avgSilencePauseCount = silencePauseCount / numRecords
+    unAuthorizedObjects = set(unAuthorizedObjects)
+    unAuthorizedObjects = list(unAuthorizedObjects)
+    personality = max(set(personlity), key = personlity.count)
+
+    finalConfidence = avgConfidenceScore > 2.25 and 'high' or avgConfidenceScore > 1.5 and 'average' or 'low'
+    finalKnowledge = avgKnowledgeScore > 2.25 and 'Good' or avgKnowledgeScore > 1.5 and 'Average' or 'Poor'
+    finalMindset = avgMindsetScore > 0.5 and 'positive' or 'negative'
+
+    return {
+        'confidence': finalConfidence,
+        'knowledge': finalKnowledge,
+        'mindset': finalMindset,
+        'avgFillerPausesCount': avgFillerPausesCount,
+        'avgFillerWordsPercentage': avgFillerWordsPercentage,
+        'avgSilencePauseCount': avgSilencePauseCount,
+        'unAuthorizedObjects': unAuthorizedObjects,
+        'personality': personality
+    }
+
+def executeProcess(interviewAnswersId):
+    startTime = datetime.now()
     # generate sas url for the video
     video_sas_url = generate_sas_url(
         "research", "research/{}.mp4".format(interviewAnswersId))
@@ -185,120 +259,223 @@ def executeProcess(interviewAnswersId):
     questionData = collection.interviewquestions.find_one({"_id": ObjectId(questionId)})
     sample_answers = questionData["sampleAnswers"]
     questionType = questionData["questionType"]
+    interviewSessionId = interviewAnswers["interviewSessionId"]
 
-    # #Answer Evaluation
-    # answerEvaluationPayload = json.dumps({
-    #     "candidate_answer" : extracted_text,
-    #     "sample_answers" : sample_answers
-    # })
+    #Answer Evaluation
+    answerEvaluationPayload = json.dumps({
+        "candidate_answer" : extracted_text,
+        "sample_answers" : sample_answers,
+        "questionAnswerId" : interviewAnswersId
+    })
 
-    # print("\nCalling answer evaluation endpoint:\n\t" + ANSWER_EVALUATION_ENDPOINT)
+    print("\n---------------------------------------------------------------------------------------")
+    print("\nQuestion Answer Id: " + interviewAnswersId)
+    print("\nQuestion Type: " + questionType)
+    print("\nCandidate Answer: " + extracted_text)
+    print("\n\nProcess Start Time : " + str(startTime))
 
-    # answerEvaluationResponse = requests.request(
-    #     "GET", ANSWER_EVALUATION_ENDPOINT, headers=headers, data=answerEvaluationPayload)
 
-    # print("\nResponse from answer evaluation endpoint:\n\t" + str(answerEvaluationResponse.json()))
+    print("\n---------------------------------------------------------------------------------------")
+    print("\nCalling answer evaluation endpoint:\n\t" + ANSWER_EVALUATION_ENDPOINT)
 
-    # #Mindset Evaluaiton
-    # mindsetEvaluationPayload = json.dumps({
-    #     "answer" : extracted_text
-    # })
+    answerEvaluationResponse = requests.request(
+        "GET", ANSWER_EVALUATION_ENDPOINT, headers=headers, data=answerEvaluationPayload)
 
-    # print("\nCalling mindset evaluation endpoint:\n\t" + MINDSET_EVALUATION_ENDPOINT)
+    print("\nResponse from answer evaluation endpoint:\n\t" + str(answerEvaluationResponse.json()))
 
-    # mindsetEvaluationResponse = requests.request(
-    #     "GET", MINDSET_EVALUATION_ENDPOINT, headers=headers, data=mindsetEvaluationPayload)
+    #Mindset Evaluaiton
+    mindsetEvaluationPayload = json.dumps({
+        "answer" : extracted_text,
+        "questionAnswerId" : interviewAnswersId
+    })
+
+    print("\n---------------------------------------------------------------------------------------")
+    print("\nCalling mindset evaluation endpoint:\n\t" + MINDSET_EVALUATION_ENDPOINT)
+
+    mindsetEvaluationResponse = requests.request(
+        "GET", MINDSET_EVALUATION_ENDPOINT, headers=headers, data=mindsetEvaluationPayload)
         
-    # print("\nResponse from mindset evaluation endpoint:\n\t" + str(mindsetEvaluationResponse.json()))
+    print("\nResponse from mindset evaluation endpoint:\n\t" + str(mindsetEvaluationResponse.json()))
 
-    # #Behaviour Analytics
-    # behaviourAnalyticsPayload = json.dumps({
-    #     "video_sas_url": video_sas_url
-    # })
+    #Behaviour Analytics
+    behaviourAnalyticsPayload = json.dumps({
+        "video_sas_url": video_sas_url
+    })
 
-    # print("\nCalling Behaviour Analytics:\n\t" + video_file_name)
+    print("\n---------------------------------------------------------------------------------------")
+    print("\nCalling Behaviour Analytics:\n\t" + video_file_name)
 
-    # behaviourAnalyticsResponse = requests.request(
-    #     "GET", BEHAVIOUR_ANALYTICS_URL, headers=headers, data=behaviourAnalyticsPayload)
+    behaviourAnalyticsResponse = requests.request(
+        "GET", BEHAVIOUR_ANALYTICS_URL, headers=headers, data=behaviourAnalyticsPayload)
 
-    # print("\nBehaviour Analytics Response:\n\t" + str(behaviourAnalyticsResponse.json()))
+    print("\nBehaviour Analytics Response:\n\t" + str(behaviourAnalyticsResponse.json()))
 
-    # #Eye Contact Analytics
-    # eyeContactAnalyticsPayload = json.dumps({
-    #     "video_sas_url": video_sas_url
-    # })
+    #Eye Contact Analytics
+    eyeContactAnalyticsPayload = json.dumps({
+        "video_sas_url": video_sas_url
+    })
 
-    # print("\nCalling Eye Contact Analytics:\n\t" + video_file_name)
+    print("\n---------------------------------------------------------------------------------------")
+    print("\nCalling Eye Contact Analytics:\n\t" + video_file_name)
     
-    # eyeContactAnalyticsResponse = requests.request(
-    #     "GET", EYE_CONTACT_ANALYTICS_URL, headers=headers, data=eyeContactAnalyticsPayload)
+    eyeContactAnalyticsResponse = requests.request(
+        "GET", EYE_CONTACT_ANALYTICS_URL, headers=headers, data=eyeContactAnalyticsPayload)
 
-    # print("\nEye Contact Analytics Response:\n\t" + str(eyeContactAnalyticsResponse.json()))
+    print("\nEye Contact Analytics Response:\n\t" + str(eyeContactAnalyticsResponse.json()))
 
-    # #Filler Pauses
-    # fillerPausesPayload = json.dumps({
-    #     "audio_sas_url": audio_sas_url
-    # })
+    #Filler Pauses
+    fillerPausesPayload = json.dumps({
+        "audio_sas_url": audio_sas_url
+    })
 
-    # print("\nCalling filler pauses endpoint:\n\t" + FILLER_WORDS_ENDPOINT)
+    print("\n---------------------------------------------------------------------------------------")
+    print("\nCalling filler pauses endpoint:\n\t" + FILLER_PAUSES_ENDPOINT)
 
-    # fillerPausesResponse = requests.request(
-    #     "GET", FILLER_WORDS_ENDPOINT, headers=headers, data=fillerPausesPayload)
+    fillerPausesResponse = requests.request(
+        "GET", FILLER_PAUSES_ENDPOINT, headers=headers, data=fillerPausesPayload)
 
     
-    # print("\nResponse from filler pauses endpoint:\n\t" + str(fillerPausesResponse.json()))
+    print("\nResponse from filler pauses endpoint:\n\t" + str(fillerPausesResponse.json()))
 
-    # #Personality Traits
-    # personlaityTraitsPyaload = json.dumps({
-    #     "video_sas_url": video_sas_url
-    # })
+    #Personality Traits
+    personlaityTraitsPyaload = json.dumps({
+        "video_sas_url": video_sas_url
+    })
 
-    # print("\nCalling personality traits endpoint:\n\t" + PERSONALITY_TRAITS_ENDPOINT)
+    print("\n---------------------------------------------------------------------------------------")
+    print("\nCalling personality traits endpoint:\n\t" + PERSONALITY_TRAITS_ENDPOINT)
 
-    # personalityTraitsResponse = requests.request(
-    #     "GET", PERSONALITY_TRAITS_ENDPOINT, headers=headers, data=personlaityTraitsPyaload)
+    personalityTraitsResponse = requests.request(
+        "GET", PERSONALITY_TRAITS_ENDPOINT, headers=headers, data=personlaityTraitsPyaload)
 
-    # print("\nResponse from personality traits endpoint:\n\t" + str(personalityTraitsResponse.json()))
+    print("\nResponse from personality traits endpoint:\n\t" + str(personalityTraitsResponse.json()))
 
-    # #Smile Detection
-    # smileDetectionPayload = json.dumps({
-    #     "video_sas_url": video_sas_url
-    # })
+    #Smile Detection
+    smileDetectionPayload = json.dumps({
+        "video_sas_url": video_sas_url
+    })
 
-    # print("\nCalling smile detection endpoint:\n\t" + SMILE_DETECTION_ENDPOINT)
+    print("\n---------------------------------------------------------------------------------------")
+    print("\nCalling smile detection endpoint:\n\t" + SMILE_DETECTION_ENDPOINT)
 
-    # smileDetectionResponse = requests.request(
-    #     "GET", SMILE_DETECTION_ENDPOINT, headers=headers, data=smileDetectionPayload)
+    smileDetectionResponse = requests.request(
+        "GET", SMILE_DETECTION_ENDPOINT, headers=headers, data=smileDetectionPayload)
 
-    # print("\nResponse from smile detection endpoint:\n\t" + str(smileDetectionResponse.json()))
+    print("\nResponse from smile detection endpoint:\n\t" + str(smileDetectionResponse.json()))
 
-    # #Unauthroized Object Detection
-    # unauthorizedObjectDetectionPayload = json.dumps({
-    #     "video_sas_url": video_sas_url
-    # })
+    #Unauthroized Object Detection
+    unauthorizedObjectDetectionPayload = json.dumps({
+        "video_sas_url": video_sas_url
+    })
 
-    # print("\nCalling unauthorized object detection endpoint:\n\t" + UNAUTHORIZED_OBJECT_DETECTION_ENDPOINT)
+    print("\n---------------------------------------------------------------------------------------")
+    print("\nCalling unauthorized object detection endpoint:\n\t" + UNAUTHORIZED_OBJECT_DETECTION_ENDPOINT)
 
-    # unauthorizedObjectDetectionResponse = requests.request(
-    #     "GET", UNAUTHORIZED_OBJECT_DETECTION_ENDPOINT, headers=headers, data=unauthorizedObjectDetectionPayload)
+    unauthorizedObjectDetectionResponse = requests.request(
+        "GET", UNAUTHORIZED_OBJECT_DETECTION_ENDPOINT, headers=headers, data=unauthorizedObjectDetectionPayload)
 
-    # print("\nResponse from unauthorized object detection endpoint:\n\t" + str(unauthorizedObjectDetectionResponse.json()))
+    print("\nResponse from unauthorized object detection endpoint:\n\t" + str(unauthorizedObjectDetectionResponse.json())) 
 
-    #Filler Words Identification
-    print("\nCalling filler words identification endpoint:\n\t")
+    #Language Fluency 
+    print("\n---------------------------------------------------------------------------------------")
+    print("\nCalling language fluency endpoint:\n\t" + LANGUAGE_FLUENCY_ENDPOINT)
 
-    fillerWordsResponse = fillerwords(extracted_text)
+    languageFluencyResponse = requests.request(
+        "GET", LANGUAGE_FLUENCY_ENDPOINT, headers=headers, data=json.dumps({"audio_sas_url": audio_sas_url, "extracted_text": extracted_text, "questionAnswerId" :interviewAnswersId }))
 
-    print("\nResponse from filler words identification endpoint:\n\t" + str(fillerWordsResponse))
+    print("\nResponse from language fluency endpoint:\n\t" + str(languageFluencyResponse.json()))
 
+    #Emotion Analysis
+    print("\n---------------------------------------------------------------------------------------")
+    print("\nCalling Emotion analysis endpoint:\n\t" + EMOTION_ANALYSIS_URL)
 
-    #Silence Pauses Identification
-    print("\nCalling silence pauses identification endpoint:\n\t")
+    emotionAnalysisPayload = json.dumps({
+        "video_sas_url": video_sas_url
+    })
 
-    silencePausesResponse = countPauses(audio_sas_url)
+    emotionAnalysisResponse = requests.request(
+        "GET", EMOTION_ANALYSIS_URL, headers=headers, data=emotionAnalysisPayload)
 
-    print("\nResponse from silence pauses identification endpoint:\n\t" + str(silencePausesResponse))   
+    print("\nResponse from confidence analysis endpoint:\n\t" + str(emotionAnalysisResponse.json()))
 
+    #confidence analysis
+    confidence = confidenceEvaluate(
+        eyeContactAnalyticsResponse.json().get("status"),
+        smileDetectionResponse.json().get("status"),
+        emotionAnalysisResponse.json().get("status"),
+        behaviourAnalyticsResponse.json().get("status")
+    )
+
+    resultQuestion = {
+                    "confidence": confidence,
+                    "knowledge" : answerEvaluationResponse.json().get("result"),
+                    "mindset" : mindsetEvaluationResponse.json().get("result"),
+                    "personality" : personalityTraitsResponse.json().get("personalitytraits"),
+                    "unAuthorizedObjects" : unauthorizedObjectDetectionResponse.json().get("unauthorizedObjects"),
+                    "fillerPausesCount" : fillerPausesResponse.json().get("count"),
+                    "fillerWordsPercentage" : languageFluencyResponse.json().get("fillerWordPercentage"),
+                    "silencePausesCount" : languageFluencyResponse.json().get("silencePauses")
+                    }
+    
+    print("\n---------------------------------------------------------------------------------------")
+    print("\n---------------------------------------------------------------------------------------")
+    print("\nRESULT:\n\t" + str(resultQuestion))
+    print("\n---------------------------------------------------------------------------------------")
+    endTime = datetime.now()
+    print("\nProcess End Time:\n\t" + str(endTime))
+    print("\nDuration:\n\t" + str(endTime - startTime))
+    print("\n---------------------------------------------------------------------------------------")
+
+    #update the database result for the interviewAnswersId
+    collection.interviewanswers.update_one(
+        {"_id": ObjectId(interviewAnswersId)},
+        {
+            "$set": {
+                "result": {
+                    "confidence": confidence,
+                    "knowledge" : answerEvaluationResponse.json().get("result"),
+                    "mindset" : mindsetEvaluationResponse.json().get("result"),
+                    "personality" : personalityTraitsResponse.json().get("personalitytraits"),
+                    "unAuthorizedObjects" : unauthorizedObjectDetectionResponse.json().get("unauthorizedObjects"),
+                    "fillerPausesCount" : fillerPausesResponse.json().get("count"),
+                    "fillerWordsPercentage" : languageFluencyResponse.json().get("fillerWordsPercentage"),
+                    "silencePausesCount" : languageFluencyResponse.json().get("silencePauses")
+                    },
+                "hasProcessed": True
+            }
+        }
+    )
+
+    #take all the interviewanswers where interviewSessionId = interviewSessionId and hasProcessed = True
+    interviewAnswers = collection.interviewanswers.find({"interviewSessionId": ObjectId(interviewSessionId)})
+
+    interviewAnswerList = []
+
+    for interviewAnswer in interviewAnswers:
+        interviewAnswerList.append(interviewAnswer)
+        if interviewAnswer["hasProcessed"] == False:
+            allDone = False
+            break
+        else:
+            allDone = True
+
+    if allDone:
+        overallResult = overallEvaluation(interviewAnswerList)
+        print("\n---------------------------------------------------------------------------------------")
+        print("\n---------------------------------------------------------------------------------------")
+        print("\nOVERALL RESULT:\n\t" + str(overallResult))
+        print("\n---------------------------------------------------------------------------------------")
+
+        #update the database result for the interviewSessionId
+        collection.interviewsessions.update_one(
+            {"_id": ObjectId(interviewSessionId)},
+            {
+                "$set": {
+                    "result": overallResult,
+                    "hasProcessed": True
+                }
+            }
+        )
 
 @app.route('/evaluateAnswer', methods=['POST'])
 def predict():
