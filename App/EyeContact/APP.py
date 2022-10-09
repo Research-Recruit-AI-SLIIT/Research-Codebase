@@ -1,9 +1,11 @@
+import datetime
+
 import cv2 as cv
 import numpy as np
 import module as m
 import time
 
-from flask import Flask, request, jsonify 
+from flask import Flask, request, jsonify
 import flask
 from flask_cors import CORS, cross_origin
 import re
@@ -19,11 +21,17 @@ app.config["DEBUG"] = True
 
 @app.route('/eyecontact', methods=['GET'])
 def eyecontact():
+    print("-------------------------------------------------------------------")
     data = request.get_json(force=True)
     video_sas_url = data['video_sas_url']
     r = requests.get(video_sas_url, allow_redirects=True)
     filename = re.search('(?<=research/).*(?=\?)', video_sas_url).group(0).split("/")[1]
+    print("\ndownload the Video from Database \t filename {}".format(filename))
     open(filename, 'wb').write(r.content)
+
+    start_time = time.time()
+    print("\nStart time: {} \t filename: {}".format(datetime.now(), filename))
+    print("\nStrat the preprocessing of the Video\t filename {}".format(filename))
 
     # Variables
     COUNTER = 0
@@ -40,22 +48,11 @@ def eyecontact():
     FPS = 0
 
     # creating camera object
-    #camera = cv.VideoCapture(0)
+
     # camera.set(3, 640)
     # camera.set(4, 480)
     camera = cv.VideoCapture(filename)
 
-    # Define the codec and create VideoWriter object
-    #fourcc = cv.VideoWriter_fourcc(*'XVID')
-    #f = camera.get(cv.CAP_PROP_FPS)
-    #width = camera.get(cv.CAP_PROP_FRAME_WIDTH)
-    #height = camera.get(cv.CAP_PROP_FRAME_HEIGHT)
-    #print(width, height, f)
-    #fileName = videoPath.split('/')[1]
-    #name = fileName.split('.')[0]
-    # print(name)
-
-    #Recoder = cv.VideoWriter(f'video.mp4', fourcc, 15, (int(width), int(height)))
 
     while True:
         FRAME_COUNTER += 1
@@ -63,7 +60,7 @@ def eyecontact():
         ret, frame = camera.read()
         if ret == False:
             break
-
+        print("\nconverting frame into Gry image\t filename {}".format(filename))
         # converting frame into Gry image.
         grayFrame = cv.cvtColor(frame, cv.COLOR_BGR2GRAY)
         height, width = grayFrame.shape
@@ -87,9 +84,6 @@ def eyecontact():
             # cv.circle(image, bottomMid, 2, m.YELLOW, -1)
 
             blinkRatio = (leftRatio + rightRatio)/2
-            #cv.circle(image, circleCenter, (int(blinkRatio*4.3)), m.CHOCOLATE, -1)
-            #cv.circle(image, circleCenter, (int(blinkRatio*3.2)), m.CYAN, 2)
-            #cv.circle(image, circleCenter, (int(blinkRatio*2)), m.GREEN, 3)
 
             if blinkRatio > 4:
                 COUNTER += 1
@@ -100,11 +94,7 @@ def eyecontact():
                 if COUNTER > CLOSED_EYES_FRAME:
                     TOTAL_BLINKS += 1
                     COUNTER = 0
-            # cv.putText(image, f'Total Blinks: {TOTAL_BLINKS}', (230, 17),
-                    # m.fonts, 0.5, m.ORANGE, 2)
 
-            # for p in LeftEyePoint:
-            #     cv.circle(image, p, 3, m.MAGENTA, 1)
             mask, pos, color = m.EyeTracking(frame, grayFrame, RightEyePoint)
 
             if pos == 'Left':
@@ -117,27 +107,11 @@ def eyecontact():
             maskleft, leftPos, leftColor = m.EyeTracking(
                 frame, grayFrame, LeftEyePoint)
 
-            # draw background as line where we put text.
-            #cv.line(image, (30, 90), (100, 90), color[0], 30)
-            #cv.line(image, (25, 50), (135, 50), m.WHITE, 30)
-            #cv.line(image, (int(width-150), 50), (int(width-45), 50), m.WHITE, 30)
-            # cv.line(image, (int(width-140), 90),
-            # (int(width-60), 90), leftColor[0], 30)
 
-            # writing text on above line
-            #cv.putText(image, f'{pos}', (35, 95), m.fonts, 0.6, color[1], 2)
-            # cv.putText(image, f'{leftPos}', (int(width-140), 95),
-            # m.fonts, 0.6, leftColor[1], 2)
-            #cv.putText(image, f'Right Eye', (35, 55), m.fonts, 0.6, color[1], 2)
-            # cv.putText(image, f'Left Eye', (int(width-145), 55),
-            # m.fonts, 0.6, leftColor[1], 2)
-
-            # showing the frame on the screen
-            #cv.imshow('Frame', image)
         else:
             cv.imshow('Frame', frame)
 
-        # Recoder.write(frame)
+
         # calculating the seconds
         SECONDS = time.time() - START_TIME
         # calculating the frame rate
@@ -151,14 +125,10 @@ def eyecontact():
         if key == ord('q'):
 
             break
-    # closing the camera
-    # camera.release()
-    # Recoder.release()
+
     # closing  all the windows
     # cv.destroyAllWindows()
-    print(Lefteye)
-    print(Righteye)
-    print(Centereye)
+
     left = Lefteye
     right = Righteye
     center = Centereye
@@ -166,14 +136,32 @@ def eyecontact():
     camera.release()
 
     try:
+        print("\nRemove the file from the Database\t filename {}".format(filename))
         os.remove(filename)
     except:
         pass
+    print("\nNo of frames for the Three Main Positions of the Eyes  : ",datetime.now().strftime("%H:%M:%S") +"\t filename {}".format(filename))
+    print("No of left eye frames : ", left)
+    print("No of right eye frames : ", right)
+    print("No of center eye frames : ", center)
 
-    return{
-        "Left eye": left,
-        "right eye:": right,
-        "center": center
-    }
+    # total frame count
+    total = left + right + center
+    # if center has 75% or larger then status is good
+    if center / total >= 0.75:
+        status = 'High'
+    elif center / total >= 0.6:
+        status = 'Medium'
+    else:
+        status = 'Low'
+
+    print("\nEye Contact Level : ", status)
+
+    # print process end time
+    print("\nProcess End Time",datetime.now.strftime("%H:%M:%S")+"\t filename {}".format(filename))
+    print("\n--------------------------------------------------------------------------")
+
+    return {"status": status}
+
 
 app.run(port=5003)
