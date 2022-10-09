@@ -24,7 +24,9 @@ emotion_model = model_from_json(loaded_model_json)
 
 # load weights into new model
 emotion_model.load_weights("./model/emotion_model.h5")
+print ('-'*50)
 print("Loaded model from disk")
+print ('-'*50)
 
 @app.route('/Emotion', methods=['GET'])
 def predict():
@@ -54,6 +56,9 @@ def predict():
         "Sad" : 0,
         "Surprised" : 0
     }
+    print ('-'*50) 
+    #print("\nStart time: {} \t filename: {}".format(datetime.now(), filename))
+    print ('-'*50)
 
     # start the webcam feed
     #cap = cv2.VideoCapture(0)
@@ -62,7 +67,8 @@ def predict():
     # you may download one from here : https://www.pexels.com/video/three-girls-laughing-5273028/
     #cap = cv2.VideoCapture("C:\\Users\\Okanda Liyanage\\Desktop\\emotion\\Emotion_detection_with_CNN-main\\video.mp4")
     cap = cv2.VideoCapture(filename)
-
+    total=0
+    happy_neutral =0
     while True:
 
         # Find haar cascade to draw bounding box around face
@@ -113,11 +119,25 @@ def predict():
             #print(len(list1))
         #cv2.imshow('Emotion Detection', frame)
       
-        for key,value in emotion_dict.items():
-                print(value,':',Emotion_count[key])
-                emotion_count_dict[value] = Emotion_count[key]
+    for key,value in emotion_dict.items():
+        print(value,':',Emotion_count[key])
+        emotion_count_dict[value] = Emotion_count[key]
     
-    cap.release()
+    for key,value in emotion_dict.items():
+        total+=Emotion_count[key]
+        if key=="Happy" or "Neutral":
+            happy_neutral+=Emotion_count[key]
+    status=""
+    if float(happy_neutral/total)>0.75:
+        status ="High"
+    elif float(happy_neutral/total)>0.6:
+        status ="Medium"
+    else:
+        status="Low"
+    
+    print ('-'*50) 
+    #print("\nEnd time: {} \t filename: {}".format(datetime.now(), filename))
+    print ('-'*50)
 
     try:
         if os.path.exists(filename):
@@ -125,6 +145,8 @@ def predict():
     except:
         pass
 
-    return emotion_count_dict
+    print(status)            
+    return status
+
 
 app.run(port=5002)
