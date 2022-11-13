@@ -12,6 +12,7 @@ to give all the insights of the candidates in mock interviews.
 
 *Candidate Konwledge and Attitude Evaluation*
 *  There is lack of researches and tools to automatically evaluate the answers given by the candidates. Therefore it is required to spend lot of money and time to evaluate the answers given by the candidates.
+*  Therefore an automatic evaluation will be introduced to evaluate the answers given at the video interview. Through the answers given at the interview, the mindset of the candidate is evaluated.
 
 *Candidate English Language Fluency and Personality Evaluation*
 *  
