@@ -16,7 +16,7 @@ const ProfileIcon = () => {
 					aria-haspopup='true'
 					aria-expanded='false'>
 					<img
-						src='https://source.unsplash.com/random/40x40/?illustration'
+						src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQRbiMjUoOxJCAMB9poSO2wLg34m7OxmyaT-A&usqp=CAU'
 						width='40'
 						height='40'
 						className='rounded-circle'

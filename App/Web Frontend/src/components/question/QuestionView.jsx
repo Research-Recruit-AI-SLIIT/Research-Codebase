@@ -34,7 +34,16 @@ const QuestionView = ({ question }) => {
 						</div>
 					</div>
 				</div>
-
+				{question.knowledgeArea && (
+					<div className='form-row mt-2'>
+						<div className='col-md-12 faded-title'>
+							<h5>Knowledge Area</h5>
+						</div>
+						<div className='col-md-12'>
+							{question.knowledgeArea}
+						</div>
+					</div>
+				)}
 				<div className='form-row mt-2'>
 					<div className='col-md-12 faded-title'>
 						<h5>Sample answers</h5>

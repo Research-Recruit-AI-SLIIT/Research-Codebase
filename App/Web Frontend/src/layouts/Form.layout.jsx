@@ -5,7 +5,7 @@ const FormLayout = ({ title, cardImage, ...props }) => {
 	return (
 		<div className='container'>
 			<div className='row '>
-				<div className='col-md-12 text-center'>
+				<div className='col-md-12'>
 					<span className='page-title'>{title}</span>
 				</div>
 			</div>

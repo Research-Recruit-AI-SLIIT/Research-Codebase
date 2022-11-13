@@ -35,10 +35,36 @@ const finishInterview = (interviewSessionId) => {
 	});
 };
 
+const getMyInterviews = () => {
+	return request({
+		method: 'get',
+		url: `interview-session/my-interviews`,
+		headers: getAuthHeader()
+	});
+};
+
+const getInterviewSession = (interviewSessionId) => {
+	return request({
+		method: 'get',
+		url: `interview-session/get/${interviewSessionId}`,
+		headers: getAuthHeader()
+	});
+};
+
+const getRecruiterInterviews = () => {
+	return request({
+		method: 'get',
+		url: `interview-session/get-recruiter-interviews`,
+		headers: getAuthHeader()
+	});
+};
 const InterviewSessionService = {
 	startInterviewSession,
 	answerQuestion,
-	finishInterview
+	finishInterview,
+	getMyInterviews,
+	getInterviewSession,
+	getRecruiterInterviews
 };
 
 export default InterviewSessionService;

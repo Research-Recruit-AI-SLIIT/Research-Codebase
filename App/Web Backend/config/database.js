@@ -7,6 +7,7 @@ const connectDB = async () => {
     await mongoose.connect(config.mongoose.url, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
+      dbName:"recruitai"
     });
 
     logger.info('MongoDB Connection is up and running');

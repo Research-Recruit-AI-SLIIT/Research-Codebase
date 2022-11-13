@@ -11,18 +11,6 @@
 	position: relative;
 }
 
-.page-title::after {
-	content: '';
-	position: absolute;
-	height: 3px;
-	background: rgb(0, 0, 0);
-	top: 102%;
-	width: 50%;
-	left: 50%;
-	transform: translateX(-50%);
-	border-radius: 4px;
-}
-
 .loading-spinner-wrapper {
 	display: flex;
 	justify-content: center;
@@ -51,7 +39,39 @@
 	padding: 13px;
 }
 
+.fs-15 {
+	font-size: 15px !important;
+}
+
 .td-none {
 	text-decoration: none !important;
 	color: #000;
+}
+
+.home-image {
+	width: 100%;
+	height: 70%;
+	object-fit: fill;
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center;
+	background-image: url(https://cms-assets.themuse.com/media/lead/_1200x630_crop_center-center_82_none/38dbcd07-a729-411e-b008-9f6dc58cd967.jpg);
+}
+
+.home-page-title {
+	font-size: 2.2rem;
+	color: #000;
+	text-align: center;
+	margin: 2rem 0;
+	position: relative;
+}
+
+footer {
+	background: #212529;
+}
+
+.section-container {
+	padding: 20px 0;
+	border: 1px solid rgb(233, 233, 233);
+	border-radius: 20px;
 }

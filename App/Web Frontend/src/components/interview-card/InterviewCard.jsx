@@ -6,6 +6,7 @@ import InterviewService from '../../services/Interview.service';
 import { AuthContext } from '../../store/auth';
 import Card from '../card/Card';
 import './InterviewCard.styles.css';
+import InterviewCardRow from './InterviewCardRow';
 
 const InterviewCard = ({ interview, onDelete }) => {
 	const { getRole } = useContext(AuthContext);
@@ -25,7 +26,6 @@ const InterviewCard = ({ interview, onDelete }) => {
 						'Error while deleting the interview. Please try again later.',
 						{ type: 'error' }
 					);
-					console.log(err);
 				});
 		}
 	};
@@ -77,15 +77,6 @@ const InterviewCard = ({ interview, onDelete }) => {
 					)}
 				</div>
 			</Card>
-		</div>
-	);
-};
-
-const InterviewCardRow = ({ label, value }) => {
-	return (
-		<div className='col-md-12'>
-			<span className='interview-card-row-label'>{label} : </span>
-			<span className='interview-card-row-value'>{value}</span>
 		</div>
 	);
 };

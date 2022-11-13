@@ -16,7 +16,24 @@ const INITIAL_STATE = {
 	organization: '',
 	questions: [],
 	difficultyLevel: '',
-	time: ''
+	time: '',
+	con_eye_contact: 5,
+	con_smile: 5,
+	con_facial: 5,
+	con_behavior: 5,
+	comm_fwp_good: 10,
+	comm_fwp_avg: 20,
+	comm_fpp_good: 10,
+	comm_fpp_avg: 20,
+	comm_sppm_good: 5,
+	comm_sppm_avg: 10,
+	com_fw: 5,
+	com_fp: 5,
+	com_sp: 5,
+	overall_knowd: 3.81,
+	overall_positive: 4.6,
+	overall_con: 4.19,
+	overall_comm: 3.77
 };
 
 const AddInterview = () => {
@@ -32,9 +49,10 @@ const AddInterview = () => {
 	};
 
 	const handleChange = (e) => {
+		const value = getValue(e.target.name, e.target.value);
 		setData({
 			...data,
-			[e.target.name]: e.target.value
+			[e.target.name]: value
 		});
 		clearErrors();
 	};
@@ -92,10 +110,15 @@ const AddInterview = () => {
 		if (key === 'name' || key === 'jobRole') return true;
 		return false;
 	};
+
+	const getValue = (key, value) => {
+		if (key.includes('_')) {
+			return Number(value);
+		}
+		return value;
+	};
 	return (
-		<FormLayout
-			title='Add Interview'
-			cardImage={'https://source.unsplash.com/random/?interview'}>
+		<FormLayout title='Add Interview'>
 			<form onSubmit={handleSubmit}>
 				{Object.keys(data).map((key) => {
 					return (
@@ -173,7 +196,78 @@ const AddInterview = () => {
 						min={0}
 						required={true}
 					/>
+					<div className='col-md-12'>
+						<hr />
+					</div>
+					<div className='col-md-12 my-2'>
+						<h4>Evaluation Metrics</h4>
+					</div>
+					{constants.evaluationMatrics.map((matric) => {
+						return (
+							<div className='col-md-12'>
+								<h5>{matric.group}</h5>
 
+								<div className='row'>
+									{matric.items.map((item) => {
+										return (
+											<Input
+												className={'col-md-3'}
+												name={item.key}
+												type='number'
+												value={data[item.key]}
+												onChange={handleChange}
+												placeHolder={item.label}
+												label={item.label}
+											/>
+										);
+									})}
+								</div>
+								{matric.subGroups && (
+									<div className='row'>
+										{matric.subGroups.map((subGroup) => {
+											return (
+												<div className='col-md-6'>
+													<h5>{subGroup.group}</h5>
+													<div className='row'>
+														{subGroup.items.map(
+															(subItem) => {
+																return (
+																	<Input
+																		className={
+																			'col-md-6'
+																		}
+																		name={
+																			subItem
+																		}
+																		type='number'
+																		value={
+																			data[
+																				subItem
+																					.key
+																			]
+																		}
+																		onChange={
+																			handleChange
+																		}
+																		placeHolder={
+																			subItem.label
+																		}
+																		label={
+																			subItem.label
+																		}
+																	/>
+																);
+															}
+														)}
+													</div>
+												</div>
+											);
+										})}
+									</div>
+								)}
+							</div>
+						);
+					})}
 					{!!errors.interviewError && (
 						<div className='col-md-12'>
 							<Alert

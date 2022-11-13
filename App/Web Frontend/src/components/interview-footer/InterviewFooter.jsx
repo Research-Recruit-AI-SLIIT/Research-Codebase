@@ -6,7 +6,6 @@ const InterviewFooter = () => {
 	const { endTime, questions, currentStep } = useContext(InterviewContext);
 	const [time, setTime] = React.useState('');
 	useEffect(() => {
-		console.log(currentStep);
 		const interval = setInterval(() => {
 			const currentTime = new Date().getTime();
 
