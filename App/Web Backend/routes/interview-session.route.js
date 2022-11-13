@@ -18,6 +18,12 @@ router.put(
   interviewSessionController.completeInterviewSession
 );
 
+router.get('/my-interviews', auth('getMyInterviewSessions'), interviewSessionController.getInterviewSessionByUserId);
+router.get(
+  '/get-recruiter-interviews',
+  auth('getRecruiterInterviewSessions'),
+  interviewSessionController.getRecruiterInterviewSessions
+);
 router.get('/get/:id', interviewSessionController.getInterviewSessionById);
 
 module.exports = router;

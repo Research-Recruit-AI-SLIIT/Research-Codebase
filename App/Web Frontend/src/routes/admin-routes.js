@@ -2,6 +2,8 @@ import RequireAuth from '../components/require-auth/RequireAuth';
 import AddInterview from '../pages/interview/AddInterview';
 import ManageInterviews from '../pages/interview/ManageInterviews';
 import UpdateInterview from '../pages/interview/UpdateInterview';
+import MyInterviews from '../pages/MyInterviews/MyInterviews';
+import MyInterviewSession from '../pages/MyInterviews/MyInterviewSession';
 import AddOrganization from '../pages/organization/AddOrganization';
 import AddQuestions from '../pages/questions/AddQuestions';
 
@@ -52,7 +54,28 @@ export const adminRoutes = [
 		name: 'Update Interview',
 		component: (
 			<RequireAuth role={'admin'}>
-				<UpdateInterview />
+				<AddQuestions />
+			</RequireAuth>
+		),
+		requireAuth: true,
+		hide: true
+	},
+	{
+		path: '/completed-interviews',
+		name: 'Completed Interviews',
+		component: (
+			<RequireAuth role={'admin'}>
+				<MyInterviews />
+			</RequireAuth>
+		),
+		requireAuth: true
+	},
+	{
+		path: '/my-interview-session/:id',
+		name: 'My Interview Session',
+		component: (
+			<RequireAuth role={'admin'}>
+				<MyInterviewSession />
 			</RequireAuth>
 		),
 		requireAuth: true,

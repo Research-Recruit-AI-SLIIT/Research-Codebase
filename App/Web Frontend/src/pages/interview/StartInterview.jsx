@@ -13,11 +13,9 @@ const StartInterview = ({ interviewId, timeLimit, questions }) => {
 	const { startInterviewSession } = useContext(InterviewContext);
 
 	const onInterviewStart = () => {
-		console.log('onInterviewStart');
 		setLoading(true);
 		InterviewSessionService.startInterviewSession(interviewId)
 			.then((res) => {
-				console.log(res);
 				const interviewSession = res.interviewSession;
 				startInterviewSession(
 					interviewSession._id,

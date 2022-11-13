@@ -7,8 +7,8 @@ const MenuItem = ({ path, name, requireAuth }) => {
 	const styles = {
 		background: `linear-gradient(
       to left,
-      rgba(255, 255, 255, 0.7) 0,
-      rgba(255, 255, 255, 1) 80%,
+      rgba(255, 255, 255, 0.37) 0px,
+      rgba(255, 255, 255, 1) 90%,
       rgba(255, 255, 255, 1) 180px
     ),
     url(${image}) no-repeat
@@ -26,13 +26,13 @@ const MenuItem = ({ path, name, requireAuth }) => {
 	return (
 		<Link
 			to={path}
-			className={`col-md-4 ${
+			className={`col-md-3 ${
 				requireAuth ? 'mt-4' : ''
-			} td-none menu-item mx-4 my-2 p-4`}
+			} td-none menu-item mx-4 my-2 `}
 			style={styles}>
 			<div className='card mi-card'>
 				<div className='card-body'>
-					<h3 className='card-title page-title'>{name}</h3>
+					<h5 className='card-title'>{name}</h5>
 				</div>
 			</div>
 		</Link>

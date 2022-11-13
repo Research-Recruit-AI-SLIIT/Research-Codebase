@@ -32,7 +32,7 @@ const Navbar = () => {
 						<nav className='navbar navbar-expand-md navbar-light'>
 							<Link className='navbar-brand' to='/'>
 								<img
-									src='https://assets.codepen.io/1462889/fcy.png'
+									src='https://i.imgur.com/m24Yavo.jpg'
 									alt=''
 								/>
 							</Link>

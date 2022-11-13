@@ -11,7 +11,12 @@ const CustomVideoRecorder = ({ onVideoRecordingComplete }) => {
 				countdownTime={0}
 				mimeType='video/webm;codecs=vp8,opus'
 				constraints={{
-					audio: true
+					audio: true,
+					video: {
+						width: 1280,
+						height: 720,
+						facingMode: 'user'
+					}
 				}}
 				onRecordingComplete={(videoBlob) => {
 					onVideoRecordingComplete(videoBlob);

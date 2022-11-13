@@ -23,3 +23,324 @@
     at next (E:\SLIIT\Year 4\Research\Web App\yasiru-be\node_modules\express\lib\router\route.js:144:13)
     at E:\SLIIT\Year 4\Research\Web App\yasiru-be\middlewares\auth.js:29:19
     at processTicksAndRejections (node:internal/process/task_queues:96:5)
+[31merror[39m: Error: "questionType" is required
+    at E:\SLIIT\Year 4\Research\Web App\Backend\middlewares\validate.js:16:17
+    at Layer.handle [as handle_request] (E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\express\lib\router\route.js:144:13)
+    at E:\SLIIT\Year 4\Research\Web App\Backend\middlewares\auth.js:29:19
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+[31merror[39m: Error: "questionType" is required
+    at E:\SLIIT\Year 4\Research\Web App\Backend\middlewares\validate.js:16:17
+    at Layer.handle [as handle_request] (E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\express\lib\router\route.js:144:13)
+    at E:\SLIIT\Year 4\Research\Web App\Backend\middlewares\auth.js:29:19
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+[31merror[39m: Error: You have already started this interview
+    at Object.createInterviewSession (E:\SLIIT\Year 4\Research\Web App\Backend\services\interview-session.service.js:21:11)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+    at async E:\SLIIT\Year 4\Research\Web App\Backend\controllers\interview-session.controller.js:8:28
+[31merror[39m: Error: Email is already taken. Email: candidate2@gmail.com
+    at Object.createUser (E:\SLIIT\Year 4\Research\Web App\Backend\services\auth.service.js:11:11)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+    at async register (E:\SLIIT\Year 4\Research\Web App\Backend\controllers\auth.controller.js:9:18)
+[31merror[39m: ValidationError: Candidate validation failed: password: Path `password` (`123456`) is shorter than the minimum allowed length (8).
+    at model.Document.invalidate (E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\mongoose\lib\document.js:2980:32)
+    at E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\mongoose\lib\document.js:2769:17
+    at E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\mongoose\lib\schematype.js:1333:9
+    at processTicksAndRejections (node:internal/process/task_queues:78:11)
+[31merror[39m: ValidationError: Candidate validation failed: password: Password must contain at least one letter and one number
+    at model.Document.invalidate (E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\mongoose\lib\document.js:2980:32)
+    at E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\mongoose\lib\document.js:2769:17
+    at E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\mongoose\lib\schematype.js:1333:9
+    at processTicksAndRejections (node:internal/process/task_queues:78:11)
+[31merror[39m: Error: You have already started this interview
+    at Object.createInterviewSession (E:\SLIIT\Year 4\Research\Web App\Backend\services\interview-session.service.js:21:11)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+    at async E:\SLIIT\Year 4\Research\Web App\Backend\controllers\interview-session.controller.js:8:28
+[31merror[39m: Error: Please authenticate
+    at E:\SLIIT\Year 4\Research\Web App\Backend\middlewares\auth.js:8:19
+    at allFailed (E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\passport\lib\middleware\authenticate.js:110:18)
+    at attempt (E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\passport\lib\middleware\authenticate.js:183:28)
+    at JwtStrategy.strategy.fail (E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\passport\lib\middleware\authenticate.js:305:9)
+    at E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\passport-jwt\lib\strategy.js:106:33
+    at E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\jsonwebtoken\verify.js:152:16
+    at getSecret (E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\jsonwebtoken\verify.js:90:14)
+    at Object.module.exports [as verify] (E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\jsonwebtoken\verify.js:94:10)
+    at Function.module.exports [as JwtVerifier] (E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\passport-jwt\lib\verify_jwt.js:4:16)
+    at E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\passport-jwt\lib\strategy.js:104:25
+[31merror[39m: Error: "questionType" is required
+    at E:\SLIIT\Year 4\Research\Web App\Backend\middlewares\validate.js:16:17
+    at Layer.handle [as handle_request] (E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\express\lib\router\route.js:144:13)
+    at E:\SLIIT\Year 4\Research\Web App\Backend\middlewares\auth.js:29:19
+    at runMicrotasks (<anonymous>)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+[31merror[39m: Error: Email is already taken. Email: candidate11@gmail.com
+    at Object.createUser (E:\SLIIT\Year 4\Research\Web App\Backend\services\auth.service.js:11:11)
+    at runMicrotasks (<anonymous>)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+    at async register (E:\SLIIT\Year 4\Research\Web App\Backend\controllers\auth.controller.js:9:18)
+[31merror[39m: Error: Please authenticate
+    at E:\SLIIT\Year 4\Research\Web App\Backend\middlewares\auth.js:8:19
+    at allFailed (E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\passport\lib\middleware\authenticate.js:110:18)
+    at attempt (E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\passport\lib\middleware\authenticate.js:183:28)
+    at JwtStrategy.strategy.fail (E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\passport\lib\middleware\authenticate.js:305:9)
+    at E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\passport-jwt\lib\strategy.js:106:33
+    at E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\jsonwebtoken\verify.js:152:16
+    at getSecret (E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\jsonwebtoken\verify.js:90:14)
+    at Object.module.exports [as verify] (E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\jsonwebtoken\verify.js:94:10)
+    at Function.module.exports [as JwtVerifier] (E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\passport-jwt\lib\verify_jwt.js:4:16)
+    at E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\passport-jwt\lib\strategy.js:104:25
+[31merror[39m: Error: Email is already taken. Email: candidate11@gmail.com
+    at Object.createUser (E:\SLIIT\Year 4\Research\Web App\Backend\services\auth.service.js:11:11)
+    at runMicrotasks (<anonymous>)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+    at async register (E:\SLIIT\Year 4\Research\Web App\Backend\controllers\auth.controller.js:9:18)
+[31merror[39m: Error: Email is already taken. Email: candidate11@gmail.com
+    at Object.createUser (E:\SLIIT\Year 4\Research\Web App\Backend\services\auth.service.js:11:11)
+    at runMicrotasks (<anonymous>)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+    at async register (E:\SLIIT\Year 4\Research\Web App\Backend\controllers\auth.controller.js:9:18)
+[31merror[39m: Error: Incorrect email or password
+    at Object.loginUserWithEmailAndPassword (E:\SLIIT\Year 4\Research\Web App\Backend\services\auth.service.js:44:11)
+    at async E:\SLIIT\Year 4\Research\Web App\Backend\controllers\auth.controller.js:20:16
+[31merror[39m: Error: Incorrect email or password
+    at Object.loginUserWithEmailAndPassword (E:\SLIIT\Year 4\Research\Web App\Backend\services\auth.service.js:44:11)
+    at async E:\SLIIT\Year 4\Research\Web App\Backend\controllers\auth.controller.js:20:16
+[31merror[39m: Error: Incorrect email or password
+    at Object.loginUserWithEmailAndPassword (E:\SLIIT\Year 4\Research\Web App\Backend\services\auth.service.js:44:11)
+    at async E:\SLIIT\Year 4\Research\Web App\Backend\controllers\auth.controller.js:20:16
+[31merror[39m: Error: Incorrect email or password
+    at Object.loginUserWithEmailAndPassword (E:\SLIIT\Year 4\Research\Web App\Backend\services\auth.service.js:44:11)
+    at runMicrotasks (<anonymous>)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+    at async E:\SLIIT\Year 4\Research\Web App\Backend\controllers\auth.controller.js:20:16
+[31merror[39m: Error: Incorrect email or password
+    at Object.loginUserWithEmailAndPassword (E:\SLIIT\Year 4\Research\Web App\Backend\services\auth.service.js:44:11)
+    at async E:\SLIIT\Year 4\Research\Web App\Backend\controllers\auth.controller.js:20:16
+[31merror[39m: Error: Please authenticate
+    at E:\SLIIT\Year 4\Research\Web App\Backend\middlewares\auth.js:8:19
+    at allFailed (E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\passport\lib\middleware\authenticate.js:110:18)
+    at attempt (E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\passport\lib\middleware\authenticate.js:183:28)
+    at JwtStrategy.strategy.fail (E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\passport\lib\middleware\authenticate.js:305:9)
+    at E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\passport-jwt\lib\strategy.js:106:33
+    at Object.module.exports [as verify] (E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\jsonwebtoken\verify.js:63:12)
+    at Function.module.exports [as JwtVerifier] (E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\passport-jwt\lib\verify_jwt.js:4:16)
+    at E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\passport-jwt\lib\strategy.js:104:25
+    at JwtStrategy._secretOrKeyProvider (E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\passport-jwt\lib\strategy.js:40:13)
+    at JwtStrategy.authenticate (E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\passport-jwt\lib\strategy.js:99:10)
+[31merror[39m: Error: Please authenticate
+    at E:\SLIIT\Year 4\Research\Web App\Backend\middlewares\auth.js:8:19
+    at allFailed (E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\passport\lib\middleware\authenticate.js:110:18)
+    at attempt (E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\passport\lib\middleware\authenticate.js:183:28)
+    at JwtStrategy.strategy.fail (E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\passport\lib\middleware\authenticate.js:305:9)
+    at E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\passport-jwt\lib\strategy.js:106:33
+    at Object.module.exports [as verify] (E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\jsonwebtoken\verify.js:63:12)
+    at Function.module.exports [as JwtVerifier] (E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\passport-jwt\lib\verify_jwt.js:4:16)
+    at E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\passport-jwt\lib\strategy.js:104:25
+    at JwtStrategy._secretOrKeyProvider (E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\passport-jwt\lib\strategy.js:40:13)
+    at JwtStrategy.authenticate (E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\passport-jwt\lib\strategy.js:99:10)
+[31merror[39m: Error: Please authenticate
+    at E:\SLIIT\Year 4\Research\Web App\Backend\middlewares\auth.js:8:19
+    at allFailed (E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\passport\lib\middleware\authenticate.js:110:18)
+    at attempt (E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\passport\lib\middleware\authenticate.js:183:28)
+    at JwtStrategy.strategy.fail (E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\passport\lib\middleware\authenticate.js:305:9)
+    at E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\passport-jwt\lib\strategy.js:106:33
+    at Object.module.exports [as verify] (E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\jsonwebtoken\verify.js:63:12)
+    at Function.module.exports [as JwtVerifier] (E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\passport-jwt\lib\verify_jwt.js:4:16)
+    at E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\passport-jwt\lib\strategy.js:104:25
+    at JwtStrategy._secretOrKeyProvider (E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\passport-jwt\lib\strategy.js:40:13)
+    at JwtStrategy.authenticate (E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\passport-jwt\lib\strategy.js:99:10)
+[31merror[39m: MongoServerError: Error=2, Details='Response status code does not indicate success: BadRequest (400); Substatus: 1028; ActivityId: b9b21477-6105-433b-970c-95fc8c4a6975; Reason: (Message: {"Errors":["Your account is currently configured with a total throughput limit of 1000 RU\/s. This operation failed because it would have increased the total throughput to 1200 RU\/s. See https:\/\/aka.ms\/cosmos-tp-limit for more information."]}
+ActivityId: b9b21477-6105-433b-970c-95fc8c4a6975, Request URI: /apps/28478076-7984-4a67-ac0c-57ab42e35fb2/services/68f8458b-f985-4b7e-9cb7-48d22e51cd60/partitions/b3051a9a-0abc-4359-a4e4-408e63cc57c5/replicas/133091937007626974p, RequestStats: , SDK: Microsoft.Azure.Documents.Common/2.14.0, Microsoft.Azure.Cosmos.Tracing.TraceData.ClientSideRequestStatisticsTraceDatum, Windows/10.0.19041 cosmos-netstandard-sdk/3.18.0);
+    at Connection.onMessage (E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\mongodb\lib\cmap\connection.js:210:30)
+    at MessageStream.<anonymous> (E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\mongodb\lib\cmap\connection.js:63:60)
+    at MessageStream.emit (node:events:513:28)
+    at processIncomingData (E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\mongodb\lib\cmap\message_stream.js:132:20)
+    at MessageStream._write (E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\mongodb\lib\cmap\message_stream.js:33:9)
+    at writeOrBuffer (node:internal/streams/writable:391:12)
+    at _write (node:internal/streams/writable:332:10)
+    at MessageStream.Writable.write (node:internal/streams/writable:336:10)
+    at TLSSocket.ondata (node:internal/streams/readable:754:22)
+    at TLSSocket.emit (node:events:513:28)
+[31merror[39m: Error: Incorrect email or password
+    at Object.loginUserWithEmailAndPassword (E:\SLIIT\Year 4\Research\Web App\Backend\services\auth.service.js:44:11)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+    at async E:\SLIIT\Year 4\Research\Web App\Backend\controllers\auth.controller.js:20:16
+[31merror[39m: Error: Forbidden, You don't have rights to do this action
+    at E:\SLIIT\Year 4\Research\Web App\Backend\middlewares\auth.js:16:21
+    at JwtStrategy.strategy.success (E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\passport\lib\middleware\authenticate.js:222:18)
+    at verified (E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\passport-jwt\lib\strategy.js:115:41)
+    at JwtStrategy.jwtVerify [as _verify] (E:\SLIIT\Year 4\Research\Web App\Backend\config\passport.js:20:5)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+[31merror[39m: MongoServerError: Error=2, Details='Response status code does not indicate success: BadRequest (400); Substatus: 1028; ActivityId: a914aeba-fccc-4883-a8cd-9f0f681377e1; Reason: (Message: {"Errors":["Your account is currently configured with a total throughput limit of 1000 RU\/s. This operation failed because it would have increased the total throughput to 1200 RU\/s. See https:\/\/aka.ms\/cosmos-tp-limit for more information."]}
+ActivityId: a914aeba-fccc-4883-a8cd-9f0f681377e1, Request URI: /apps/28478076-7984-4a67-ac0c-57ab42e35fb2/services/68f8458b-f985-4b7e-9cb7-48d22e51cd60/partitions/b3051a9a-0abc-4359-a4e4-408e63cc57c5/replicas/133091937007626974p, RequestStats: , SDK: Microsoft.Azure.Documents.Common/2.14.0, Microsoft.Azure.Cosmos.Tracing.TraceData.ClientSideRequestStatisticsTraceDatum, Windows/10.0.19041 cosmos-netstandard-sdk/3.18.0);
+    at Connection.onMessage (E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\mongodb\lib\cmap\connection.js:210:30)
+    at MessageStream.<anonymous> (E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\mongodb\lib\cmap\connection.js:63:60)
+    at MessageStream.emit (node:events:513:28)
+    at processIncomingData (E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\mongodb\lib\cmap\message_stream.js:132:20)
+    at MessageStream._write (E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\mongodb\lib\cmap\message_stream.js:33:9)
+    at writeOrBuffer (node:internal/streams/writable:391:12)
+    at _write (node:internal/streams/writable:332:10)
+    at MessageStream.Writable.write (node:internal/streams/writable:336:10)
+    at TLSSocket.ondata (node:internal/streams/readable:754:22)
+    at TLSSocket.emit (node:events:513:28)
+[31merror[39m: Server selection timed out after 30000 ms
+[31merror[39m: Error: Email is already taken. Email: google@gmail.com
+    at Object.createOrganization (E:\SLIIT\Year 4\Research\Web App\Backend\services\organization.service.js:7:11)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+    at async E:\SLIIT\Year 4\Research\Web App\Backend\controllers\organization.controller.js:6:24
+[31merror[39m: Error: No interview categories found
+    at Object.getInterviewCategories (E:\SLIIT\Year 4\Research\Web App\Backend\services\interview.service.js:22:11)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+    at async E:\SLIIT\Year 4\Research\Web App\Backend\controllers\interview.controller.js:12:31
+[31merror[39m: Error: "questionType" is required
+    at E:\SLIIT\Year 4\Research\Web App\Backend\middlewares\validate.js:16:17
+    at Layer.handle [as handle_request] (E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\express\lib\router\route.js:144:13)
+    at E:\SLIIT\Year 4\Research\Web App\Backend\middlewares\auth.js:29:19
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+[31merror[39m: Server selection timed out after 30000 ms
+[31merror[39m: MongooseServerSelectionError: getaddrinfo ENOTFOUND researchproject-centralindia.mongo.cosmos.azure.com
+    at Function.Model.$wrapCallback (E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\mongoose\lib\model.js:5007:32)
+    at E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\mongoose\lib\query.js:4794:21
+    at E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\mongoose\lib\helpers\promiseOrCallback.js:32:5
+    at new Promise (<anonymous>)
+    at promiseOrCallback (E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\mongoose\lib\helpers\promiseOrCallback.js:31:10)
+    at model.Query.exec (E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\mongoose\lib\query.js:4793:10)
+    at model.Query.Query.then (E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\mongoose\lib\query.js:4876:15)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+[31merror[39m: Error: Please authenticate
+    at E:\SLIIT\Year 4\Research\Web App\Backend\middlewares\auth.js:8:19
+    at allFailed (E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\passport\lib\middleware\authenticate.js:110:18)
+    at attempt (E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\passport\lib\middleware\authenticate.js:183:28)
+    at JwtStrategy.strategy.fail (E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\passport\lib\middleware\authenticate.js:305:9)
+    at E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\passport-jwt\lib\strategy.js:106:33
+    at Object.module.exports [as verify] (E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\jsonwebtoken\verify.js:63:12)
+    at Function.module.exports [as JwtVerifier] (E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\passport-jwt\lib\verify_jwt.js:4:16)
+    at E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\passport-jwt\lib\strategy.js:104:25
+    at JwtStrategy._secretOrKeyProvider (E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\passport-jwt\lib\strategy.js:40:13)
+    at JwtStrategy.authenticate (E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\passport-jwt\lib\strategy.js:99:10)
+[31merror[39m: Error: Incorrect email or password
+    at Object.loginUserWithEmailAndPassword (E:\SLIIT\Year 4\Research\Web App\Backend\services\auth.service.js:44:11)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+    at async E:\SLIIT\Year 4\Research\Web App\Backend\controllers\auth.controller.js:20:16
+[31merror[39m: Error: Incorrect email or password
+    at Object.loginUserWithEmailAndPassword (E:\SLIIT\Year 4\Research\Web App\Backend\services\auth.service.js:44:11)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+    at async E:\SLIIT\Year 4\Research\Web App\Backend\controllers\auth.controller.js:20:16
+[31merror[39m: Error: Incorrect email or password
+    at Object.loginUserWithEmailAndPassword (E:\SLIIT\Year 4\Research\Web App\Backend\services\auth.service.js:44:11)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+    at async E:\SLIIT\Year 4\Research\Web App\Backend\controllers\auth.controller.js:20:16
+[31merror[39m: Error: Incorrect email or password
+    at Object.loginUserWithEmailAndPassword (E:\SLIIT\Year 4\Research\Web App\Backend\services\auth.service.js:44:11)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+    at async E:\SLIIT\Year 4\Research\Web App\Backend\controllers\auth.controller.js:20:16
+[31merror[39m: Error: Incorrect email or password
+    at Object.loginUserWithEmailAndPassword (E:\SLIIT\Year 4\Research\Web App\Backend\services\auth.service.js:44:11)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+    at async E:\SLIIT\Year 4\Research\Web App\Backend\controllers\auth.controller.js:20:16
+[31merror[39m: MongoNetworkError: connection 13 to 52.140.110.65:10255 closed
+    at Connection.onClose (E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\mongodb\lib\cmap\connection.js:138:19)
+    at TLSSocket.<anonymous> (E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\mongodb\lib\cmap\connection.js:65:46)
+    at TLSSocket.emit (node:events:513:28)
+    at node:net:757:14
+    at TCP.done (node:_tls_wrap:584:7)
+[31merror[39m: Error: Please authenticate
+    at E:\SLIIT\Year 4\Research\Web App\Backend\middlewares\auth.js:8:19
+    at allFailed (E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\passport\lib\middleware\authenticate.js:110:18)
+    at attempt (E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\passport\lib\middleware\authenticate.js:183:28)
+    at JwtStrategy.strategy.fail (E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\passport\lib\middleware\authenticate.js:305:9)
+    at E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\passport-jwt\lib\strategy.js:106:33
+    at E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\jsonwebtoken\verify.js:152:16
+    at getSecret (E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\jsonwebtoken\verify.js:90:14)
+    at Object.module.exports [as verify] (E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\jsonwebtoken\verify.js:94:10)
+    at Function.module.exports [as JwtVerifier] (E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\passport-jwt\lib\verify_jwt.js:4:16)
+    at E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\passport-jwt\lib\strategy.js:104:25
+[31merror[39m: Error: You have already started this interview
+    at Object.createInterviewSession (E:\SLIIT\Year 4\Research\Web App\Backend\services\interview-session.service.js:21:11)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+    at async E:\SLIIT\Year 4\Research\Web App\Backend\controllers\interview-session.controller.js:8:28
+[31merror[39m: Error: Please authenticate
+    at E:\SLIIT\Year 4\Research\Web App\Backend\middlewares\auth.js:8:19
+    at allFailed (E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\passport\lib\middleware\authenticate.js:110:18)
+    at attempt (E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\passport\lib\middleware\authenticate.js:183:28)
+    at JwtStrategy.strategy.fail (E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\passport\lib\middleware\authenticate.js:305:9)
+    at E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\passport-jwt\lib\strategy.js:106:33
+    at E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\jsonwebtoken\verify.js:152:16
+    at getSecret (E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\jsonwebtoken\verify.js:90:14)
+    at Object.module.exports [as verify] (E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\jsonwebtoken\verify.js:94:10)
+    at Function.module.exports [as JwtVerifier] (E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\passport-jwt\lib\verify_jwt.js:4:16)
+    at E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\passport-jwt\lib\strategy.js:104:25
+[31merror[39m: Server selection timed out after 30000 ms
+[31merror[39m: Server selection timed out after 30000 ms
+[31merror[39m: MongoNetworkError: connection 16 to 52.140.110.65:10255 closed
+    at Connection.onClose (E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\mongodb\lib\cmap\connection.js:138:19)
+    at TLSSocket.<anonymous> (E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\mongodb\lib\cmap\connection.js:65:46)
+    at TLSSocket.emit (node:events:513:28)
+    at node:net:757:14
+    at TCP.done (node:_tls_wrap:584:7)
+[31merror[39m: MongoNetworkError: connection 17 to 52.140.110.65:10255 closed
+    at Connection.onClose (E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\mongodb\lib\cmap\connection.js:138:19)
+    at TLSSocket.<anonymous> (E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\mongodb\lib\cmap\connection.js:65:46)
+    at TLSSocket.emit (node:events:513:28)
+    at node:net:757:14
+    at TCP.done (node:_tls_wrap:584:7)
+[31merror[39m: Error: Email is already taken. Email: candidate60@gmail.com
+    at Object.createUser (E:\SLIIT\Year 4\Research\Web App\Backend\services\auth.service.js:11:11)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+    at async register (E:\SLIIT\Year 4\Research\Web App\Backend\controllers\auth.controller.js:9:18)
+[31merror[39m: Error: You have already started this interview
+    at Object.createInterviewSession (E:\SLIIT\Year 4\Research\Web App\Backend\services\interview-session.service.js:21:11)
+    at runMicrotasks (<anonymous>)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+    at async E:\SLIIT\Year 4\Research\Web App\Backend\controllers\interview-session.controller.js:8:28
+[31merror[39m: Error: You have already started this interview
+    at Object.createInterviewSession (E:\SLIIT\Year 4\Research\Web App\Backend\services\interview-session.service.js:21:11)
+    at runMicrotasks (<anonymous>)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+    at async E:\SLIIT\Year 4\Research\Web App\Backend\controllers\interview-session.controller.js:8:28
+[31merror[39m: Error: You have already started this interview
+    at Object.createInterviewSession (E:\SLIIT\Year 4\Research\Web App\Backend\services\interview-session.service.js:21:11)
+    at runMicrotasks (<anonymous>)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+    at async E:\SLIIT\Year 4\Research\Web App\Backend\controllers\interview-session.controller.js:8:28
+[31merror[39m: Error: You have already started this interview
+    at Object.createInterviewSession (E:\SLIIT\Year 4\Research\Web App\Backend\services\interview-session.service.js:21:11)
+    at runMicrotasks (<anonymous>)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+    at async E:\SLIIT\Year 4\Research\Web App\Backend\controllers\interview-session.controller.js:8:28
+[31merror[39m: Error: "questionType" is required
+    at E:\SLIIT\Year 4\Research\Web App\Backend\middlewares\validate.js:16:17
+    at Layer.handle [as handle_request] (E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\express\lib\router\route.js:144:13)
+    at E:\SLIIT\Year 4\Research\Web App\Backend\middlewares\auth.js:29:19
+    at runMicrotasks (<anonymous>)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+[31merror[39m: MongoNetworkError: getaddrinfo ENOTFOUND researchproject-centralindia.mongo.cosmos.azure.com
+    at connectionFailureError (E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\mongodb\lib\cmap\connect.js:382:20)
+    at TLSSocket.<anonymous> (E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\mongodb\lib\cmap\connect.js:302:22)
+    at Object.onceWrapper (node:events:628:26)
+    at TLSSocket.emit (node:events:513:28)
+    at emitErrorNT (node:internal/streams/destroy:157:8)
+    at emitErrorCloseNT (node:internal/streams/destroy:122:3)
+    at processTicksAndRejections (node:internal/process/task_queues:83:21)
+[31merror[39m: Error: Incorrect email or password
+    at Object.loginUserWithEmailAndPassword (E:\SLIIT\Year 4\Research\Web App\Backend\services\auth.service.js:44:11)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+    at async E:\SLIIT\Year 4\Research\Web App\Backend\controllers\auth.controller.js:20:16
+[31merror[39m: Error: "con_eye_contact" is not allowed, "con_smile" is not allowed, "con_facial" is not allowed, "con_behavior" is not allowed, "comm_fwp_good" is not allowed, "comm_fwp_avg" is not allowed, "comm_fpp_good" is not allowed, "comm_fpp_avg" is not allowed, "comm_sppm_good" is not allowed, "comm_sppm_avg" is not allowed, "com_fw" is not allowed, "com_fp" is not allowed, "com_sp" is not allowed, "overall_knowd" is not allowed, "overall_positive" is not allowed, "overall_con" is not allowed, "overall_comm" is not allowed
+    at E:\SLIIT\Year 4\Research\Web App\Backend\middlewares\validate.js:16:17
+    at Layer.handle [as handle_request] (E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\express\lib\router\route.js:144:13)
+    at E:\SLIIT\Year 4\Research\Web App\Backend\middlewares\auth.js:29:19
+    at runMicrotasks (<anonymous>)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+[31merror[39m: Error: "con_eye_contact" is not allowed, "con_smile" is not allowed, "con_facial" is not allowed, "con_behavior" is not allowed, "comm_fwp_good" is not allowed, "comm_fwp_avg" is not allowed, "comm_fpp_good" is not allowed, "comm_fpp_avg" is not allowed, "comm_sppm_good" is not allowed, "comm_sppm_avg" is not allowed, "com_fw" is not allowed, "com_fp" is not allowed, "com_sp" is not allowed, "overall_knowd" is not allowed, "overall_positive" is not allowed, "overall_con" is not allowed, "overall_comm" is not allowed
+    at E:\SLIIT\Year 4\Research\Web App\Backend\middlewares\validate.js:16:17
+    at Layer.handle [as handle_request] (E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (E:\SLIIT\Year 4\Research\Web App\Backend\node_modules\express\lib\router\route.js:144:13)
+    at E:\SLIIT\Year 4\Research\Web App\Backend\middlewares\auth.js:29:19
+    at runMicrotasks (<anonymous>)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)

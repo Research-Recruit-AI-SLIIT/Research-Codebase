@@ -1,8 +1,11 @@
 .question-text {
 	padding: 10px;
 	font-weight: 500;
-	border: 1px solid black;
 	border-radius: 10px;
 	margin: 10px;
 	background-color: #e5f0ff !important;
+}
+
+.faded {
+	opacity: 0.5;
 }

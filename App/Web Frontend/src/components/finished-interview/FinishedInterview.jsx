@@ -3,8 +3,6 @@ import Confetti from 'react-confetti';
 import './FinishedInterview.styles.css';
 
 const FinishedInterview = () => {
-	console.log(window.innerWidth);
-	console.log(window.innerHeight);
 	return (
 		<div className='finished-interview-container'>
 			<Confetti

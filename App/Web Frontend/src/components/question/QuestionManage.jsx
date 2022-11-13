@@ -10,7 +10,8 @@ const QuestionManage = ({ questionObj, onCancel, onSubmit }) => {
 		question = '',
 		questionOrder = '',
 		sampleAnswers = [],
-		questionType = ''
+		questionType = '',
+		knowledgeArea = ''
 	} = questionObj;
 
 	const [loading, setLoading] = useState(false);
@@ -19,14 +20,16 @@ const QuestionManage = ({ questionObj, onCancel, onSubmit }) => {
 		question,
 		questionOrder,
 		sampleAnswers,
-		questionType
+		questionType,
+		knowledgeArea
 	});
 
 	const [errors, setErrors] = useState({
 		question: '',
 		questionOrder: '',
 		sampleAnswers: '',
-		questionApi: ''
+		questionApi: '',
+		knowledgeArea: ''
 	});
 
 	const [sampleAnswer, setSampleAnswer] = useState('');
@@ -63,18 +66,17 @@ const QuestionManage = ({ questionObj, onCancel, onSubmit }) => {
 	const onSubmitHandler = async (e) => {
 		e.preventDefault();
 		if (validate()) {
-			console.log('onSubmitHandler validate');
 			setLoading(true);
 			setQuestion({
 				_id: '',
 				question: '',
 				questionOrder: '',
-				sampleAnswers: []
+				sampleAnswers: [],
+				knowledgeArea: ''
 			});
 			await onSubmit(_question);
 			setLoading(false);
 		} else {
-			console.log('onSubmitHandler validate failed');
 		}
 	};
 
@@ -108,7 +110,7 @@ const QuestionManage = ({ questionObj, onCancel, onSubmit }) => {
 							name='question'
 							id=''
 							onChange={onChange}
-							placeHolder='Enter question'
+							placeholder='Enter question'
 							cols='30'
 							rows='4'
 						/>
@@ -149,7 +151,21 @@ const QuestionManage = ({ questionObj, onCancel, onSubmit }) => {
 						</div>
 					</div>
 				</div>
-
+				<div className='form-row'>
+					<div className='col-md-12'>
+						<Input
+							label='Knowledge Area'
+							name='knowledgeArea'
+							className='mt-1'
+							value={_question.knowledgeArea}
+							onChange={onChange}
+							placeHolder='Knowledge Area'
+							type='text'
+							isError={!!errors.knowledgeArea}
+							errorMessage={errors.knowledgeArea}
+						/>
+					</div>
+				</div>
 				<div className='form-row mt-2'>
 					<div className='col-md-12 faded-title'>
 						<h5>Sample answers</h5>

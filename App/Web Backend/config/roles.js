@@ -1,5 +1,5 @@
 const allRoles = {
-  candidate: ['createInterviewSession', 'answerInterviewQuestion', 'completeInterviewSession'],
+  candidate: ['createInterviewSession', 'answerInterviewQuestion', 'completeInterviewSession', 'getMyInterviewSessions'],
   recruiter: [
     'addOrganization',
     'createQuestion',
@@ -9,6 +9,7 @@ const allRoles = {
     'updateInterview',
     'deleteInterview',
     'deleteInterviewQuestion',
+    'getRecruiterInterviewSessions',
   ],
   admin: [
     'addCategory',
@@ -20,6 +21,7 @@ const allRoles = {
     'updateInterview',
     'deleteInterview',
     'deleteInterviewQuestion',
+    'getRecruiterInterviewSessions',
   ],
 };
 
