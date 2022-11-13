@@ -20,6 +20,14 @@ const interviewSessionSchema = mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    hasProcessed: {
+      type: Boolean,
+      default: false,
+    },
+    result: {
+      type: Object,
+      default: {},
+    },
   },
   {
     timestamps: true,

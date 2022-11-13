@@ -51,14 +51,46 @@ const completeInterviewSession = async (interviewSessionId, userId) => {
 };
 
 const getInterviewSession = async (interviewSessionId) => {
-  const interviewSession = await InterviewSession.findById(interviewSessionId);
+  const interviewSession = await InterviewSession.findById(interviewSessionId)
+    .populate('answers')
+    .populate({
+      path: 'interview',
+      populate: {
+        path: 'organization',
+      },
+    });
   if (!interviewSession) {
     throw new ApiError(httpStatus.NOT_FOUND, 'Interview session not found');
   }
   return interviewSession;
 };
+
+const getMyInterviewSessions = async (userId) => {
+  const interviewSessions = await InterviewSession.find({ userId, isCompleted: true }).populate({
+    path: 'interview',
+    populate: {
+      path: 'organization',
+    },
+  });
+  return interviewSessions;
+};
+
+const getRecruiterInterviewSessions = async (userId) => {
+  const interviewSessions = await InterviewSession.find({ isCompleted: true }).populate({
+    path: 'interview',
+    populate: {
+      path: 'organization',
+    },
+  });
+  console.log(interviewSessions);
+  //filter by interview created by user
+  return interviewSessions.filter((session) => session.interview.createdBy.toString() == userId);
+};
+
 module.exports = {
   createInterviewSession,
   completeInterviewSession,
   getInterviewSession,
+  getMyInterviewSessions,
+  getRecruiterInterviewSessions,
 };

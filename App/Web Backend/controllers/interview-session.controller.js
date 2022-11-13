@@ -24,8 +24,24 @@ const getInterviewSessionById = catchAsync(async (req, res, next) => {
   res.status(httpStatus.OK).json({ interviewSession });
 });
 
+//get interview session by user id
+const getInterviewSessionByUserId = catchAsync(async (req, res, next) => {
+  const { _id } = req.user;
+  const interviewSession = await interviewSessionService.getMyInterviewSessions(_id);
+  res.status(httpStatus.OK).json({ interviewSession });
+});
+
+const getRecruiterInterviewSessions = catchAsync(async (req, res, next) => {
+  const { _id } = req.user;
+  console.log(_id);
+  const interviewSession = await interviewSessionService.getRecruiterInterviewSessions(_id);
+  res.status(httpStatus.OK).json({ interviewSession });
+});
+
 module.exports = {
   createInterviewSession,
   completeInterviewSession,
   getInterviewSessionById,
+  getInterviewSessionByUserId,
+  getRecruiterInterviewSessions,
 };

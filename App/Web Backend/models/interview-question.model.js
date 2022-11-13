@@ -25,6 +25,10 @@ const interviewQuestionSchema = mongoose.Schema(
       enum: ['General', 'Mind Evaluation', 'Knowledge Evaluation'],
       default: 'General',
     },
+    knowledgeArea: {
+      type: String,
+      default: 'General',
+    },
   },
   {
     timestamps: true,

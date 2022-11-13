@@ -22,8 +22,8 @@ const interviewAnswerSchema = mongoose.Schema(
       default: false,
     },
     result: {
-      type: String,
-      default: '',
+      type: Object,
+      default: {},
     },
   },
   {

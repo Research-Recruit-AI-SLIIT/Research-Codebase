@@ -51,7 +51,8 @@ const Question = ({ isFinal, finishInterview }) => {
 					setVideoData({ video: null, hasRecorded: false });
 					updateQuestion(question._id);
 					setCurrentStep(currentStep + 1);
-					axios.post('http://127.0.0.1:5000/evaluateAnswer', {
+					//todo - add python URL HERE
+					axios.post('https://recruitaibackend.herokuapp.com/mainpythonapp', {
 						interviewAnswersId: question._id,
 						video: `${constants.storage.baseUrl}/research/${question._id}.mp4`
 					});
@@ -79,8 +80,8 @@ const Question = ({ isFinal, finishInterview }) => {
 	return (
 		<div className='question-container'>
 			<div className='question-text'>
-				<h3>Question: </h3>
-				<h2>{question.question.question}</h2>
+				<span className='faded'>Question: </span>
+				<h3>{question.question.question}</h3>
 			</div>
 			<div className='row'>
 				<div className='col-md-12'>

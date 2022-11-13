@@ -11,6 +11,11 @@ const Home = () => {
 	const routes = getRouteValues(role);
 	return (
 		<div className='row'>
+			<div className='col-md-12 text-center mb-1 mt-3'>
+				<span className='home-page-title'>
+					Get Started With Recruit AI
+				</span>
+			</div>
 			<div className='col-md-12'>
 				<div className='row justify-content-center'>
 					{routes.map((route, index) =>

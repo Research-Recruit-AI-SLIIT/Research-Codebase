@@ -72,7 +72,7 @@ const Login = ({ role }) => {
 				onSubmit={handleSubmit}>
 				<div className='text-center'>
 					<img
-						src='https://cdn.pixabay.com/photo/2016/03/31/19/56/avatar-1295397__340.png'
+						src='https://static.vecteezy.com/system/resources/previews/005/950/803/original/premium-download-icon-of-search-key-person-vector.jpg'
 						className='img-fluid profile-image-pic img-thumbnail rounded-circle my-3'
 						width='200px'
 						alt='profile'
