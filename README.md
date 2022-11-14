@@ -1,5 +1,7 @@
 # 2022-028 Candidate Screening Tool
 
+![Alt text](Assets/ui.png?raw=true)
+
 **Main Objective**
 Main objective of the research is to automatically evaluate the knowledge, 
 attitude and skills of a a candidate in an interview.
